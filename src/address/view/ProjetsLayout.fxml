@@ -23,7 +23,7 @@
                            <children>
                               <ImageView fitHeight="150.0" fitWidth="166.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
                               <Label fx:id="projet_dimensionLabel" layoutX="101.0" layoutY="201.0" text="Label" />
-                              <Button layoutX="92.0" layoutY="243.0" mnemonicParsing="false" text="Editer" />
+                              <Button layoutX="92.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleEditProjet" text="Editer" />
                               <Button layoutX="197.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" />
                               <Button layoutX="6.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" />
                            </children>

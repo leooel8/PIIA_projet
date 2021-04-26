@@ -1,8 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.EditeurLayoutController">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="376.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="157.0" layoutY="14.0" text="Dimensions" />
+            <ImageView fitHeight="185.0" fitWidth="200.0" layoutX="88.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="168.0" layoutY="41.0" text="15" />
+            <Label layoutX="188.0" layoutY="41.0" text="m" />
+            <Label layoutX="41.0" layoutY="144.0" text="15" />
+            <Label layoutX="60.0" layoutY="144.0" text="m" />
+            <Label layoutX="144.0" layoutY="253.0" text="Item sélectionné" />
+            <Label layoutX="57.0" layoutY="298.0" text="Nom : " />
+            <Label fx:id="item_NameLabel" layoutX="103.0" layoutY="298.0" text="NomItem" />
+            <Label layoutX="57.0" layoutY="330.0" text="Dimensions : " />
+            <Label layoutX="79.0" layoutY="362.0" text="Longueur : " />
+            <Label layoutX="79.0" layoutY="400.0" text="Largeur : " />
+            <Label fx:id="item_XLabel" layoutX="143.0" layoutY="362.0" text="X" />
+            <Label fx:id="item_YLabel" layoutX="144.0" layoutY="400.0" text="Y" />
+            <Label layoutX="161.0" layoutY="362.0" text="m" />
+            <Label layoutX="161.0" layoutY="400.0" text="m" />
+            <ImageView fx:id="item_PreviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="88.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="241.0" fitWidth="274.0" layoutX="51.0" layoutY="673.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <SplitPane dividerPositions="0.07278481012658228" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Canvas fx:id="canvas" height="200.0" layoutX="555.0" layoutY="299.0" onMouseDragged="#deplace" onMousePressed="#attrape" onMouseReleased="#lache" width="200.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
 </BorderPane>
-

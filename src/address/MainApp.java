@@ -1,6 +1,7 @@
 package address;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import address.view.AccueilLayoutController;
@@ -15,7 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
+import address.modele.Item;
 import address.modele.Projet;
 
 public class MainApp extends Application {
@@ -26,12 +27,14 @@ public class MainApp extends Application {
 	private BorderPane editeurLayout;
 	private AnchorPane projetsLayout;
 	private ArrayList<Projet> projetsList;
+	private int currentProjetIndex;
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("KitchenApp");
 		this.projetsList = new ArrayList<Projet>(0);
+		this.projetsList.add(initExampleProjet());
 		
 		initRootLayout();
 		
@@ -130,6 +133,7 @@ public class MainApp extends Application {
 				}
 			}
 			
+			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditeurLayout.fxml"));
 			editeurLayout = (BorderPane) loader.load();
@@ -138,7 +142,8 @@ public class MainApp extends Application {
 			
 			EditeurLayoutController controller = loader.getController();
 			controller.setMainApp(this);
-			
+			controller.setCurrentProjet(this.getProjetIndex(currentProjetIndex));
+			controller.setCanvas();
 		} catch(IOException  e) {
 			e.printStackTrace();
 		}
@@ -161,6 +166,10 @@ public class MainApp extends Application {
 		return false;
 	}
 	
+	public void setCurrentProjet (int index) {
+		this.currentProjetIndex = index;
+	}
+	
 	public void alertProjetCreation() {
 		Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(primaryStage);
@@ -172,6 +181,23 @@ public class MainApp extends Application {
         alert.setContentText(message);
 
         alert.showAndWait();
+	}
+	
+	public Projet initExampleProjet() throws MalformedURLException {
+		Projet res  = new Projet ("Example project", 10, 10);
+		
+		String url = "src/address/Images/Default/ExempleItem.png";
+		Item item_1 = new Item("Table_cuisson", 0, 0, 20, 15, url);
+		Item item_2 = new Item("Plan de travail", 50, 50, 70, 20, url);
+		Item item_3 = new Item("Frigo", 100, 100, 10, 10, url);
+		Item item_4 = new Item("Four", 150, 200, 30, 30, url);
+		
+		res.addItem(item_1);
+		res.addItem(item_2);
+		res.addItem(item_3);
+		res.addItem(item_4);
+		
+		return res;
 	}
 
 	public static void main(String[] args) {

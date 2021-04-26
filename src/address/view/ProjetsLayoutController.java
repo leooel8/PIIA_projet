@@ -65,6 +65,15 @@ public class ProjetsLayoutController {
 	}
 	
 	@FXML
+	private void handleEditProjet() {
+		if (this.currentProjetsIndex != -1) {
+			this.mainApp.setCurrentProjet(this.currentProjetsIndex);
+			this.mainApp.showEditeur();
+		}
+		
+	}
+	
+	@FXML
 	private void handleLeftButton() {
 		if (currentProjetsIndex > 0) {
 			this.currentProjetsIndex -= 1;
@@ -78,14 +87,22 @@ public class ProjetsLayoutController {
 	
 	@FXML
 	private void handleRightButton() {
-		if (currentProjetsIndex < this.mainApp.getProjetsList().size() - 1) {
-			this.currentProjetsIndex += 1;
-			setProjet(this.mainApp.getProjetIndex(this.currentProjetsIndex),this.currentProjetsIndex);
+		if (this.mainApp.getProjetsList().size() != 0) {
+			if (currentProjetsIndex < this.mainApp.getProjetsList().size() - 1) {
+				this.currentProjetsIndex += 1;
+				setProjet(this.mainApp.getProjetIndex(this.currentProjetsIndex),this.currentProjetsIndex);
+			}
+			else if (currentProjetsIndex == this.mainApp.getProjetsList().size() - 1) {
+				this.currentProjetsIndex = 0;
+				setProjet(this.mainApp.getProjetIndex(this.currentProjetsIndex),this.currentProjetsIndex);
+			}
 		}
-		else if (currentProjetsIndex == this.mainApp.getProjetsList().size() - 1) {
-			this.currentProjetsIndex = 0;
-			setProjet(this.mainApp.getProjetIndex(this.currentProjetsIndex),this.currentProjetsIndex);
-		}
+		
+	}
+	
+	@FXML
+	private void handleEditButton() {
+		
 	}
 	
 	private boolean isInputValid() {

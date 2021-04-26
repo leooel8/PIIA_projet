@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 
 public class Item {
 	//ATTRIBUTS
@@ -39,7 +40,7 @@ public class Item {
 		this.height = 20;
 		this.width= 20;
 		
-		File file = new File("images/default");
+		File file = new File("Images/default");
 		String localURL = file.toURI().toURL().toString();
 		this.image = new Image(localURL);
 	}
@@ -53,8 +54,28 @@ public class Item {
 	public double getHeight() { return this.height; }
 	public Image getImage() { return this.image; } 
 	
+	public void setX(double x) { this.pos_x = x; }
+	public void setY(double y) { this.pos_y = y; }
+	
 	public void draw (GraphicsContext gc) {
 		gc.drawImage(this.image, this.pos_x, this.pos_y);
+	}
+	
+	public void drawRect (GraphicsContext gc) {
+		gc.setFill(Color.BLACK);
+		gc.fillRect(this.pos_x, this.pos_y, this.width, this.height);
+	}
+	
+	public boolean isIn(double x, double y) {
+		if (x >= this.getX() && x <= this.getX() + this.image.getWidth()) {
+			if (y >= this.getY() && y <= this.getY() + this.image.getHeight()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 	
 }

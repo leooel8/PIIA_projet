@@ -12,12 +12,14 @@ public class Projet {
 		this.name = name;
 		this.width = width;
 		this.height = height;
+		this.itemList = new ArrayList<Item>(0);
 	}
 	
 	public Projet(int index) {
 		this.name  =  "Projet " + index;
 		this.width = 6;
 		this.height = 3;
+		this.itemList = new ArrayList<Item>(0);
 	}
 	
 	public String getName() { return this.name; }
