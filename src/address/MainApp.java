@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-
 import address.view.AccueilLayoutController;
+import address.view.CatalogueEditorLayoutController;
 import address.view.CatalogueLayoutController;
 import address.view.EditeurLayoutController;
 import address.view.ProjetsLayoutController;
@@ -100,8 +100,7 @@ public class MainApp extends Application {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 	
 
@@ -257,8 +256,8 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 			FXMLLoader loader = new FXMLLoader();	
 			loader.setLocation(MainApp.class.getResource("view/CatalogueEditorLayout.fxml"));
 			 catalogueLayout = (AnchorPane)loader.load();			
-			rootLayout.setTop(catalogueLayout);			
-			CatalogueLayoutController controller = loader.getController();
+			rootLayout.setBottom(catalogueLayout);			
+			CatalogueEditorLayoutController controller = loader.getController();
 			controller.setMainApp(this);			
 			controller.setCanvas();			
 		} catch (IOException e) {
