@@ -37,12 +37,7 @@ public class Item {
 		
 	}
 	
-	public Item () {
-		File file = new File(url);
-		String localURL = file.toURI().toURL().toString();
-		this.image = new Image(localURL);
-		this.height = image.getHeight();
-		this.width = image.getWidth();
+	public Item () throws MalformedURLException {
 	}
 	
 	public Item(int index) throws MalformedURLException {

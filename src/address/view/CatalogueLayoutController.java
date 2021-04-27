@@ -38,7 +38,7 @@ public class CatalogueLayoutController {
 	
 
 	
-	private boolean catalogueBool=false;
+	private boolean catalogueBool=true;
 
 	private MainApp mainApp;
 	private Stage stage;

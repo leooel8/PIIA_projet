@@ -53,8 +53,8 @@ public class MainApp extends Application {
 		this.projetsList.add(initExampleProjet());
 		
 		initRootLayout();
-		showEditorCatalogue();
-		//showAccueil();
+//		showEditorCatalogue();
+		showAccueil();
 	}
 	
 	private void chargeImagesEtTypes() throws MalformedURLException {
@@ -224,11 +224,16 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 				if (this.projetsLayout.isVisible()) {
 					this.projetsLayout.setVisible(false);
 				}
-			}			
+			}
+			if (this.editeurLayout != null) {
+				if (this.editeurLayout.isVisible()) {
+					this.editeurLayout.setVisible(false);
+				}
+			}
 			FXMLLoader loader = new FXMLLoader();	
 			loader.setLocation(MainApp.class.getResource("view/CatalogueLayout.fxml"));
 			 catalogueLayout = (AnchorPane)loader.load();			
-			rootLayout.setTop(catalogueLayout);			
+			rootLayout.setCenter(catalogueLayout);			
 			CatalogueLayoutController controller = loader.getController();
 			controller.setMainApp(this);			
 			controller.setCanvas();			
