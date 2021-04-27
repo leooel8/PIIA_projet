@@ -29,4 +29,9 @@ public class RootLayerController {
 	private void handleProjetsButton() {
 		this.mainApp.showProjets();
 	}
+	
+	@FXML
+	private void handleCatalogueButton() {
+		this.mainApp.showCatalogue();
+	}
 }
