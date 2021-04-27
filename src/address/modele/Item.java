@@ -17,6 +17,7 @@ public class Item {
 	private String name;
 	private double pos_x, pos_y;
 	private double height, width;
+	private String url;
 	Image image;
 	
 	//CONSTRUCTEUR
@@ -24,12 +25,19 @@ public class Item {
 		this.name = name;
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
-		this.height = height;
-		this.width = width;
+		
+		this.url = url;
 		
 		File file = new File(url);
 		String localURL = file.toURI().toURL().toString();
 		this.image = new Image(localURL);
+		
+		this.height = this.image.getHeight();
+		this.width = this.image.getWidth();
+		
+	}
+	
+	public Item () {
 		
 	}
 	
@@ -53,9 +61,19 @@ public class Item {
 	public double getWidth() { return this.width; }
 	public double getHeight() { return this.height; }
 	public Image getImage() { return this.image; } 
+	public String getUrl() {return this.url; }
 	
 	public void setX(double x) { this.pos_x = x; }
 	public void setY(double y) { this.pos_y = y; }
+	public void setWidth(double width) { this.width = width; }
+	public void setHeight(double height) { this.height = height; }
+	public void setUrl(String url) throws Exception {
+		this.url = url;
+		File file = new File(url);
+		String localURL = file.toURI().toURL().toString();
+		this.image = new Image(localURL);
+	}
+	
 	
 	public void draw (GraphicsContext gc) {
 		gc.drawImage(this.image, this.pos_x, this.pos_y);
@@ -76,6 +94,18 @@ public class Item {
 		} else {
 			return false;
 		}
+	}
+	
+	public Item copy() throws Exception {
+		Item res = new Item();
+		res.setX(this.getX());
+		res.setY(this.getY());
+		res.setWidth(this.getWidth());
+		res.setHeight(this.getHeight());
+		res.setUrl(this.getUrl());
+		
+		return res;
+		
 	}
 	
 }
