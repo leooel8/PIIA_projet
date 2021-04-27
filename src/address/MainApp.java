@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import address.modele.Item;
 import address.modele.Projet;
@@ -178,7 +179,7 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		}
 	}
 	
-	public void showEditeur() {
+	public void showEditeur() throws Exception {
 		try {
 			if (this.accueilLayout != null) {
 				if (this.accueilLayout.isVisible()) {
@@ -231,7 +232,7 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 			}
 			FXMLLoader loader = new FXMLLoader();	
 			loader.setLocation(MainApp.class.getResource("view/CatalogueLayout.fxml"));
-			 catalogueLayout = (AnchorPane)loader.load();			
+			catalogueLayout = (AnchorPane)loader.load();			
 			rootLayout.setCenter(catalogueLayout);			
 			CatalogueLayoutController controller = loader.getController();
 			controller.setMainApp(this);			
@@ -241,27 +242,28 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		}
 	}
 	
-	public void showEditorCatalogue() {
-		try {
-			if (this.accueilLayout != null) {
-				if (this.accueilLayout.isVisible()) {
-					this.accueilLayout.setVisible(false);
-				}
-			}
-			if (this.projetsLayout != null) {
-				if (this.projetsLayout.isVisible()) {
-					this.projetsLayout.setVisible(false);
-				}
-			}			
+	public boolean showEditorCatalogue(EditeurLayoutController editeur) {
+		try {			
 			FXMLLoader loader = new FXMLLoader();	
 			loader.setLocation(MainApp.class.getResource("view/CatalogueEditorLayout.fxml"));
-			 catalogueLayout = (AnchorPane)loader.load();			
-			rootLayout.setBottom(catalogueLayout);			
+			catalogueLayout = (AnchorPane)loader.load();			
+			
+			Stage catalogueStage = new Stage();
+			catalogueStage.setTitle("Catalogue");
+			catalogueStage.initModality(Modality.WINDOW_MODAL);
+			Scene scene = new Scene(catalogueLayout);
+			catalogueStage.setScene(scene);
+			
 			CatalogueEditorLayoutController controller = loader.getController();
-			controller.setMainApp(this);			
-			controller.setCanvas();			
+			controller.setMainApp(this);
+			controller.setEditeur(editeur);
+			controller.setCanvas();
+			
+			catalogueStage.showAndWait();
+			return controller.isAddClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	public ArrayList<Type> getTypesList(){ return this.typesListe;}

@@ -81,6 +81,10 @@ public class EditeurLayoutController {
 		
 	}
 	
+	public Projet getCurrentProjet() {
+		return this.currentProjet;
+	}
+	
 	@FXML
 	private void initialize() {
 	}
@@ -109,8 +113,14 @@ public class EditeurLayoutController {
 			double x_avant = this.currentProjet.getItemList().get(currentItemIndex).getX();
 			double y_avant = this.currentProjet.getItemList().get(currentItemIndex).getY();
 			
-			this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
-			this.currentProjet.getItemList().get(currentItemIndex).setY(y_avant + dy);
+			if ((dx < 0 && this.currentProjet.getItemList().get(currentItemIndex).getX() + dx > 0) || (dx > 0 && this.currentProjet.getItemList().get(currentItemIndex).getX() + this.currentProjet.getItemList().get(currentItemIndex).getWidth() + dx <= this.canvas.getWidth())) {
+				this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
+			}
+			if ((dy < 0 && this.currentProjet.getItemList().get(currentItemIndex).getY() + dy > 0) || (dy > 0 && this.currentProjet.getItemList().get(currentItemIndex).getY() + this.currentProjet.getItemList().get(currentItemIndex).getHeight() + dy <= this.canvas.getHeight())) {
+				this.currentProjet.getItemList().get(currentItemIndex).setY(y_avant + dy);
+			}
+			
+			
 			
 			this.x_souris = e.getX();
 			this.y_souris = e.getY();
@@ -147,9 +157,21 @@ public class EditeurLayoutController {
 	
 	@FXML
 	private void handleCancelButton() {
-		this.currentProjet = this.historic.get(0);
-		this.historic.remove(0);
-		this.drawCanvas();
+		if (this.historic.size() != 0) {
+			this.currentProjet = this.historic.get(0);
+			this.historic.remove(0);
+			this.drawCanvas();
+		}
+		
+	}
+	
+	@FXML
+	private void handleAddButton() throws Exception {
+		boolean addClicked = this.mainApp.showEditorCatalogue(this);
+//		if (addClicked) {
+//			this.drawCanvas();
+//			
+//		}
 	}
 	
 	public void setMainApp(MainApp mainApp) {
@@ -161,8 +183,14 @@ public class EditeurLayoutController {
 	public void setCurrentItem(int item) {
 		this.currentItemIndex = item;
 	}
-	public void setCurrentProjet(Projet projet) {
+	public void setCurrentProjet(Projet projet) throws Exception {
 		this.currentProjet =  projet;
+		this.addStateToHistoric();
+	}
+	
+	public void addStateToHistoric() throws Exception {
+		lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
+		this.historic.add(0, lastState);
 	}
 	
 	private int findScale() {
@@ -177,7 +205,6 @@ public class EditeurLayoutController {
 					lastScale = scale;
 					scale += (int) scale/2;
 				} else {
-					System.out.println("DONE");
 					flag = false;
 				}
 				

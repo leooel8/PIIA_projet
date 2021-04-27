@@ -65,12 +65,10 @@ public class ProjetsLayoutController {
 	}
 	
 	@FXML
-	private void handleEditProjet() {
+	private void handleEditProjet() throws Exception {
 		if (this.currentProjetsIndex != -1) {
 			this.mainApp.setCurrentProjet(this.currentProjetsIndex);
 			this.mainApp.showEditeur();
-			this.mainApp.showEditorCatalogue();
-			
 		}
 		
 	}
@@ -99,11 +97,6 @@ public class ProjetsLayoutController {
 				setProjet(this.mainApp.getProjetIndex(this.currentProjetsIndex),this.currentProjetsIndex);
 			}
 		}
-		
-	}
-	
-	@FXML
-	private void handleEditButton() {
 		
 	}
 	
