@@ -1,15 +1,15 @@
 package address.view;
 
 
+import java.util.ArrayList;
+
 import address.MainApp;
 import address.modele.Item;
 import address.modele.Projet;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -41,10 +41,13 @@ public class EditeurLayoutController {
 	private int scale;
 	private GraphicsContext gc;
 	private boolean inNavigate;
+	private Projet lastState;
+	private ArrayList<Projet> historic;
 
 	public EditeurLayoutController() {
 		this.enDeplacement = false;
 		this.inNavigate = false;
+		historic = new ArrayList<Projet>(0);
 	}
 	
 	public void setCanvas() {
@@ -61,7 +64,14 @@ public class EditeurLayoutController {
 		
 		canvas.setOnMouseReleased(e -> lache(e));
 		
-		canvas.setOnMouseDragged(e -> deplace(e));
+		canvas.setOnMouseDragged(e -> {
+			try {
+				deplace(e);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		borderPane.setCenter(canvas);
 		
@@ -79,10 +89,8 @@ public class EditeurLayoutController {
 	private void attrape(MouseEvent e) throws Exception {
 		for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
 			if (this.currentProjet.getItemList().get(i).isIn(e.getX(), e.getY())) {
-				Projet lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList(), this.currentProjet.getAnnuleState());
-				
-				this.currentProjet.addStateAnnule(lastState);
-				
+				lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
+				this.historic.add(0, lastState);
 				this.currentItemIndex = i;
 				this.enDeplacement = true;
 				this.x_souris = e.getX();
@@ -93,7 +101,7 @@ public class EditeurLayoutController {
 	}
 	
 	@FXML
-	private void deplace(MouseEvent e) {
+	private void deplace(MouseEvent e) throws Exception {
 		if (this.enDeplacement) {
 			double dx = e.getX() - this.x_souris;
 			double dy = e.getY() - this.y_souris;
@@ -112,7 +120,12 @@ public class EditeurLayoutController {
 	
 	@FXML
 	private void lache(MouseEvent e) {
-		this.enDeplacement = false;
+		if (enDeplacement) {
+			enDeplacement = false;
+		}
+		
+		
+		this.drawCanvas();
 	}
 	
 	@FXML
@@ -134,12 +147,9 @@ public class EditeurLayoutController {
 	
 	@FXML
 	private void handleCancelButton() {
-		if (this.currentProjet.getAnnuleState().size() != 0) {
-			this.currentProjet = this.currentProjet.getLastState();
-			
-			
-			this.drawCanvas();
-		}
+		this.currentProjet = this.historic.get(0);
+		this.historic.remove(0);
+		this.drawCanvas();
 	}
 	
 	public void setMainApp(MainApp mainApp) {
@@ -196,6 +206,11 @@ public class EditeurLayoutController {
 			Item currentItem = this.currentProjet.getItemList().get(i);
 			
 			currentItem.draw(gc);
+			
+			if (i == this.currentItemIndex) {
+				gc.setStroke(Color.BLUE);
+				gc.strokeRect(currentItem.getX() + 2, currentItem.getY() + 2, currentItem.getWidth() - 4, currentItem.getHeight() - 4);
+			}
 		}
 		drawLayering();
 	}
