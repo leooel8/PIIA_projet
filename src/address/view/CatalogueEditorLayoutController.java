@@ -1,84 +1,51 @@
+
 package address.view;
 
+import java.util.ArrayList;
 import address.MainApp;
 import address.modele.Type;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Hyperlink;
 
-public class CatalogueLayoutController {
-
-	@FXML
-	private TableView<Type> electromenagerTable=null; 
-	@FXML
-	private TableView<Type> mobilierTable=null; 
-	@FXML
-	private TableView<Type> lumiereEtDecorationTable=null; 
-	@FXML
-	private TableColumn<Type, String> electromenagerColumn=null;
-	@FXML
-	private TableColumn<Type, String> mobilierColumn=null;
-	@FXML
-	private TableColumn<Type, String> lumiereEtDecorationColumn=null;   
+public class CatalogueEditorLayoutController {
 
 	@FXML
 	private Canvas canvas;
-
+	
+	ArrayList<Type> types= new ArrayList<Type>();
+	
 	private MainApp mainApp;
 	private Stage stage;
+
+	
 
 	/**
 	 * The constructor.
 	 * The constructor is called before the initialize() method.
 	 */
-	public CatalogueLayoutController() {
+	public CatalogueEditorLayoutController() {
 	}
 
-	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 */
+	
 	@FXML
 	private void initialize() {
-
-
-		// Initialize the types tables with columns.  	
-		electromenagerColumn.setCellValueFactory(
-				cellData -> cellData.getValue().typeNameProperty());
-		mobilierColumn.setCellValueFactory(
-				cellData -> cellData.getValue().typeNameProperty());
-		lumiereEtDecorationColumn.setCellValueFactory(
-				cellData -> cellData.getValue().typeNameProperty());  
-
-		// Clear type d'item details.
-		// setCanvas();
-
-		// Listen for selection changes and show the type details when changed.
-		electromenagerTable.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> showImagesCatalogue(newValue));
-
-		mobilierTable.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> showImagesCatalogue(newValue));
-
-		lumiereEtDecorationTable.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> showImagesCatalogue(newValue));
-
-	}	
-
+	}
+	
 	/**
 	 * Fills all text fields to show details about the items.
 	 * If the specified person is null, all text fields are cleared.
 	 *
 	 * @param person the person or null
 	 */
-	private void showImagesCatalogue(Type type) { 
+	private void showImagesCatalogue(Type type) { ////////////////////////////////////////////Typelist<item>
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		if (type != null) {		
-			setCanvas();			
+			setCanvas();		
 			// Fill the labels with info from the person object.        
 			int abs=40;
 			int ord=50;
@@ -91,7 +58,7 @@ public class CatalogueLayoutController {
 				if(i==(type.getItemsList().size()/2)) 
 					ord+=type.getItemsList().get(i).getHeight()+50;
 			}
-			abs=40;		
+			abs=40;			
 			for (int i=type.getItemsList().size()/2+1;i<type.getItemsList().size();i++) {
 				type.getItemsList().get(i).setX(abs);
 				type.getItemsList().get(i).setY(ord);
@@ -105,7 +72,19 @@ public class CatalogueLayoutController {
 		}
 	}
 
-	public void setCanvas() {		
+	@FXML
+	private void handleTypesLink(ActionEvent e) {
+		//canvas.
+		for (Type type : this.mainApp.getTypesList()) {
+			Hyperlink hyp=(Hyperlink) e.getSource();
+			if(type.getTypeName().equals(hyp.getText())) {
+				showImagesCatalogue(type);
+				break;
+			}
+		}
+	}
+
+	public void setCanvas() {			
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
@@ -121,12 +100,7 @@ public class CatalogueLayoutController {
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-		// Add observable list data to the table
-		electromenagerTable.setItems(mainApp.getElectromenagerData());
-		mobilierTable.setItems(mainApp.getMobilierData());
-		lumiereEtDecorationTable.setItems(mainApp.getLumiereEtDecorationData());      	
+		this.mainApp = mainApp;	      	
 	}
-
 
 }
