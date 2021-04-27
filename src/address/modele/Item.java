@@ -24,13 +24,12 @@ public class Item {
 		this.name = name;
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
-		this.height = height;
-		this.width = width;
-		
+			
 		File file = new File(url);
 		String localURL = file.toURI().toURL().toString();
 		this.image = new Image(localURL);
-		
+		this.height = image.getHeight();
+		this.width = image.getWidth();
 	}
 	
 	public Item(int index) throws MalformedURLException {

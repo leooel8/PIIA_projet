@@ -69,6 +69,8 @@ public class ProjetsLayoutController {
 		if (this.currentProjetsIndex != -1) {
 			this.mainApp.setCurrentProjet(this.currentProjetsIndex);
 			this.mainApp.showEditeur();
+			this.mainApp.showEditorCatalogue();
+			
 		}
 		
 	}

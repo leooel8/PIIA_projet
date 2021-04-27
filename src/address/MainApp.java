@@ -1,14 +1,18 @@
 package address;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import address.view.AccueilLayoutController;
+import address.view.CatalogueLayoutController;
 import address.view.EditeurLayoutController;
 import address.view.ProjetsLayoutController;
 import address.view.RootLayerController;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import address.modele.Item;
 import address.modele.Projet;
+import address.modele.Type;
 
 public class MainApp extends Application {
 	
@@ -26,10 +31,21 @@ public class MainApp extends Application {
 	private AnchorPane accueilLayout;
 	private BorderPane editeurLayout;
 	private AnchorPane projetsLayout;
+	private AnchorPane catalogueLayout;
 	private ArrayList<Projet> projetsList;
 	private int currentProjetIndex;
+	
+	
+	
+	ArrayList<Type> typesListe= new ArrayList<Type>();
+	/** The datas as  observables lists of categories.*/
+	private ObservableList<Type> electromenagerData = FXCollections.observableArrayList();
+	private ObservableList<Type> mobilierData = FXCollections.observableArrayList();
+	private ObservableList<Type> lumiereEtDecorationData = FXCollections.observableArrayList();
 
-	@Override
+	public MainApp() throws MalformedURLException{
+		chargeImagesEtTypes();
+	}
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("KitchenApp");
@@ -37,8 +53,37 @@ public class MainApp extends Application {
 		this.projetsList.add(initExampleProjet());
 		
 		initRootLayout();
+		showEditorCatalogue();
+		//showAccueil();
+	}
+	
+	private void chargeImagesEtTypes() throws MalformedURLException {
 		
-		showAccueil();
+		File dossierPrincipal = new File("images/");  //on va dans le dossier images
+		String [] dossierCategories = dossierPrincipal.list (); 
+		for(int c=0;c<dossierCategories.length;c++) { //pour chaques categories	
+			String categorie = dossierCategories[c]; 	//on recupere le nom de la categorie
+			File dossierCatX = new File("images/"+categorie+"/");
+			String [] dossierType = dossierCatX.list (); 
+			for(int i=0;i<dossierType.length;i++) { //pour chaques types d'items
+				String type = dossierType[i]; //on recupere le nom du type
+				File dossierTypeX = new File("images/"+categorie+"/"+type+"/");
+				String [] images = dossierTypeX.list (); 
+				ArrayList<Item> lesItems = new ArrayList<Item>();
+				for (String item : images) {
+					String nomImage = item.substring(0, item.length()-4); // on enleve le ".png" du nom
+					String url = "images/"+categorie+"/"+type+"/"+item;
+					lesItems.add(new Item(nomImage, 200, 200, 0, 0, url));//on rajoute l'image de l'item dans l'arrayList items	
+				}					
+				typesListe.add(new Type(type,lesItems));
+				if(categorie.length()==14) 
+					electromenagerData.add(new Type(type,lesItems));				
+				else if(categorie.length()==8) 
+					mobilierData.add(new Type(type,lesItems));
+				else if(categorie.length()==19) 
+					lumiereEtDecorationData.add(new Type(type,lesItems));
+			}
+		}
 	}
 	
 	public void initRootLayout() {
@@ -59,6 +104,20 @@ public class MainApp extends Application {
 		
 	}
 	
+
+
+public ObservableList<Type> getElectromenagerData() {
+	return electromenagerData;
+}
+
+public ObservableList<Type> getMobilierData() {
+	return mobilierData;
+}
+
+public ObservableList<Type> getLumiereEtDecorationData() {
+	return lumiereEtDecorationData;
+}
+
 	public void showAccueil() {
 		try {
 			if (this.editeurLayout != null) {
@@ -132,7 +191,11 @@ public class MainApp extends Application {
 					this.projetsLayout.setVisible(false);
 				}
 			}
-			
+			if(this.editeurLayout!=null) {
+				if (this.editeurLayout.isVisible()) {
+					this.editeurLayout.setVisible(false);
+				}
+			}
 			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditeurLayout.fxml"));
@@ -143,11 +206,62 @@ public class MainApp extends Application {
 			EditeurLayoutController controller = loader.getController();
 			controller.setMainApp(this);
 			controller.setCurrentProjet(this.getProjetIndex(currentProjetIndex));
-			controller.setCanvas();
+			controller.setCanvas();			
+		
 		} catch(IOException  e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void showCatalogue() {
+		try {
+			if (this.accueilLayout != null) {
+				if (this.accueilLayout.isVisible()) {
+					this.accueilLayout.setVisible(false);
+				}
+			}
+			if (this.projetsLayout != null) {
+				if (this.projetsLayout.isVisible()) {
+					this.projetsLayout.setVisible(false);
+				}
+			}			
+			FXMLLoader loader = new FXMLLoader();	
+			loader.setLocation(MainApp.class.getResource("view/CatalogueLayout.fxml"));
+			 catalogueLayout = (AnchorPane)loader.load();			
+			rootLayout.setTop(catalogueLayout);			
+			CatalogueLayoutController controller = loader.getController();
+			controller.setMainApp(this);			
+			controller.setCanvas();			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showEditorCatalogue() {
+		try {
+			if (this.accueilLayout != null) {
+				if (this.accueilLayout.isVisible()) {
+					this.accueilLayout.setVisible(false);
+				}
+			}
+			if (this.projetsLayout != null) {
+				if (this.projetsLayout.isVisible()) {
+					this.projetsLayout.setVisible(false);
+				}
+			}			
+			FXMLLoader loader = new FXMLLoader();	
+			loader.setLocation(MainApp.class.getResource("view/CatalogueEditorLayout.fxml"));
+			 catalogueLayout = (AnchorPane)loader.load();			
+			rootLayout.setTop(catalogueLayout);			
+			CatalogueLayoutController controller = loader.getController();
+			controller.setMainApp(this);			
+			controller.setCanvas();			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public ArrayList<Type> getTypesList(){ return this.typesListe;}
+	
 	
 	public ArrayList<Projet> getProjetsList() {
 		return this.projetsList;
