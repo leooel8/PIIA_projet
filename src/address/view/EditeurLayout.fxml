@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.EditeurLayoutController">
+<BorderPane prefHeight="738.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.EditeurLayoutController">
    <left>
-      <AnchorPane prefHeight="792.0" prefWidth="376.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="772.0" prefWidth="376.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="157.0" layoutY="14.0" text="Dimensions" />
             <ImageView fx:id="projet_PreviewImage" fitHeight="185.0" fitWidth="200.0" layoutX="88.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
@@ -29,7 +29,6 @@
             <Label layoutX="176.0" layoutY="362.0" text="cm" />
             <Label layoutX="176.0" layoutY="400.0" text="cm" />
             <ImageView fx:id="item_PreviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="88.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="241.0" fitWidth="274.0" layoutX="51.0" layoutY="673.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </left>
@@ -68,7 +67,7 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <BorderPane fx:id="borderPane" layoutX="671.0" layoutY="338.0" prefHeight="876.0" prefWidth="1542.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="borderPane" layoutX="671.0" layoutY="338.0" prefHeight="700.0" prefWidth="621.0" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
         </items>
