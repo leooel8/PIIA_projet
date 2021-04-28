@@ -23,7 +23,7 @@ public class Item {
 	private double height, width;
 	private String url;
 	Image image;
-	private Double rotation;
+	private Double rotation = 0.0;
 	private boolean rotated = false;
 	
 	//CONSTRUCTEUR
@@ -42,7 +42,6 @@ public class Item {
 		this.height = this.image.getHeight();
 		this.width = this.image.getWidth();
 		
-		this.rotation = 0.0;
 		
 	}
 	

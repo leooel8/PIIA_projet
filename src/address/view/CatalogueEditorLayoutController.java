@@ -139,7 +139,7 @@ public class CatalogueEditorLayoutController {
 	}
 	
 	public boolean isAddClicked() {
-		return this.addClicked;
+		return addClicked;
 	}
 
 	/**
