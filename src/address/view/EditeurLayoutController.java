@@ -1,6 +1,8 @@
 package address.view;
 
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import address.MainApp;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +30,12 @@ public class EditeurLayoutController {
 	@FXML
 	private ImageView item_PreviewImage;
 	@FXML
+	private Label projet_WidthLabel;
+	@FXML
+	private Label projet_HeightLabel;
+	@FXML
+	private ImageView projet_PreviewImage;
+	@FXML
 	private BorderPane borderPane;
 	
 	private Canvas canvas;
@@ -42,17 +51,27 @@ public class EditeurLayoutController {
 	private GraphicsContext gc;
 	private boolean inNavigate;
 	private Projet lastState;
+	private Projet previousState;
 	private ArrayList<Projet> historic;
+	private ArrayList<Projet> cirotsih;
 
 	public EditeurLayoutController() {
-		this.enDeplacement = false;
-		this.inNavigate = false;
+		enDeplacement = false;
+		inNavigate = false;
 		historic = new ArrayList<Projet>(0);
+		cirotsih = new ArrayList<Projet>(0);
 	}
 	
-	public void setCanvas() {
+	public void setCanvas() throws Exception {
 		this.findScale();
 		this.canvas = new Canvas(this.currentProjet.getWidth()*scale, this.currentProjet.getHeight()*scale);
+		this.projet_WidthLabel.setText(Integer.toString(this.currentProjet.getWidth()));
+		this.projet_HeightLabel.setText(Integer.toString(this.currentProjet.getHeight()));
+		
+		File file = new File("src/address/Images/Default/ExempleItem.png");
+		String localURL = file.toURI().toURL().toString();
+		Image useImage = new Image(localURL);
+		this.projet_PreviewImage.setImage(useImage);
 		
 		canvas.setOnMousePressed(e -> {
 			try {
@@ -97,6 +116,7 @@ public class EditeurLayoutController {
 				this.historic.add(0, lastState);
 				this.currentItemIndex = i;
 				this.enDeplacement = true;
+				this.cirotsih = new ArrayList<Projet>(0);
 				this.x_souris = e.getX();
 				this.y_souris = e.getY();
 				break;
@@ -110,15 +130,31 @@ public class EditeurLayoutController {
 			double dx = e.getX() - this.x_souris;
 			double dy = e.getY() - this.y_souris;
 			
+			Item currItem = this.currentProjet.getItemList().get(currentItemIndex);
+			
 			double x_avant = this.currentProjet.getItemList().get(currentItemIndex).getX();
 			double y_avant = this.currentProjet.getItemList().get(currentItemIndex).getY();
 			
-			if ((dx < 0 && this.currentProjet.getItemList().get(currentItemIndex).getX() + dx > 0) || (dx > 0 && this.currentProjet.getItemList().get(currentItemIndex).getX() + this.currentProjet.getItemList().get(currentItemIndex).getWidth() + dx <= this.canvas.getWidth())) {
-				this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
+			if (currItem.getRotated()) {
+				double diff = (currItem.getWidth() - currItem.getHeight())/2 ;
+				if ((dx < 0 && currItem.getX() + dx + diff > 0) || (dx > 0 && currItem.getX() + diff + dx + currItem.getHeight() < canvas.getWidth())) {
+					this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
+				}
+				if ((dy < 0 && currItem.getY() - diff + dy > 0) || (dy > 0 && currItem.getY() - diff + dy + currItem.getWidth() < canvas.getHeight())) {
+					this.currentProjet.getItemList().get(currentItemIndex).setY(y_avant + dy);
+				}
+			} else {
+				if ((dx < 0 && currItem.getX() + dx > 0) || (dx > 0 && currItem.getX() + currItem.getWidth() + dx <= this.canvas.getWidth())) {
+					this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
+				}
+				if ((dy < 0 && currItem.getY() + dy > 0) || (dy > 0 && currItem.getY() + currItem.getHeight() + dy <= this.canvas.getHeight())) {
+					this.currentProjet.getItemList().get(currentItemIndex).setY(y_avant + dy);
+				}
 			}
-			if ((dy < 0 && this.currentProjet.getItemList().get(currentItemIndex).getY() + dy > 0) || (dy > 0 && this.currentProjet.getItemList().get(currentItemIndex).getY() + this.currentProjet.getItemList().get(currentItemIndex).getHeight() + dy <= this.canvas.getHeight())) {
-				this.currentProjet.getItemList().get(currentItemIndex).setY(y_avant + dy);
-			}
+			
+			
+			
+			
 			
 			
 			
@@ -156,24 +192,49 @@ public class EditeurLayoutController {
 	}
 	
 	@FXML
-	private void handleCancelButton() {
+	private void handleCancelButton() throws Exception {
 		if (this.historic.size() != 0) {
+			this.addStateToHistoric(false);
 			this.currentProjet = this.historic.get(0);
 			this.historic.remove(0);
 			this.drawCanvas();
 		}
-		
+	}
+	
+	@FXML
+	private void handleRetablirButton() {
+		if (this.cirotsih.size() != 0) {
+			this.currentProjet = this.cirotsih.get(0);
+			this.cirotsih.remove(0);
+			this.drawCanvas();
+		}
 	}
 	
 	@FXML
 	private void handleAddButton() throws Exception {
 		boolean addClicked = this.mainApp.showEditorCatalogue(this);
-//		if (addClicked) {
-//			this.drawCanvas();
-//			
-//		}
 	}
 	
+	@FXML
+	private void handleDeleteButton() throws Exception {
+		if (this.currentProjet.getItemList().size() != 0) {
+			this.addStateToHistoric(true);
+			this.currentProjet.getItemList().remove(currentItemIndex);
+			this.drawCanvas();
+			
+		}
+	}
+	
+	@FXML
+	private void handleUseButton() {
+		System.out.println(this.cirotsih.size());
+	}
+	
+	@FXML
+	private void handlRotateButton() {
+		currentProjet.getItemList().get(currentItemIndex).rotateRight(this.canvas);
+		drawCanvas();
+	}
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -185,12 +246,19 @@ public class EditeurLayoutController {
 	}
 	public void setCurrentProjet(Projet projet) throws Exception {
 		this.currentProjet =  projet;
-		this.addStateToHistoric();
+		this.addStateToHistoric(true);
 	}
 	
-	public void addStateToHistoric() throws Exception {
-		lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
-		this.historic.add(0, lastState);
+	public void addStateToHistoric(boolean historic) throws Exception {
+		
+		if (historic) {
+			lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
+			this.historic.add(0, lastState);
+		} else {
+			previousState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
+			this.cirotsih.add(0, previousState);
+		}
+		
 	}
 	
 	private int findScale() {
@@ -221,7 +289,20 @@ public class EditeurLayoutController {
 	}
 	
 	public void drawCanvas() {
-
+		if (currentProjet.getItemList().size() != 0) {
+			this.item_NameLabel.setText(currentProjet.getItemList().get(currentItemIndex).getName());
+			this.item_XLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getWidth()));
+			this.item_YLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getHeight()));
+			this.item_PreviewImage.setImage(currentProjet.getItemList().get(currentItemIndex).getImage());
+		
+		} else {
+			this.item_NameLabel.setText("Aucun item n'est encore dans le projet");
+			this.item_XLabel.setText(Integer.toString(0));
+			this.item_YLabel.setText(Integer.toString(0));
+			this.item_PreviewImage.setImage(null);
+		}
+		
+		
 		gc.strokeRect(0, 0, 20, 20);
 		gc.setFill(Color.WHITE);
 		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
@@ -231,12 +312,21 @@ public class EditeurLayoutController {
 		
 		for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
 			Item currentItem = this.currentProjet.getItemList().get(i);
-			
-			currentItem.draw(gc);
+			if (currentItem.getRotation() != 0) {
+				currentItem.drawTest(gc);
+			} else {
+				currentItem.draw(gc);
+			}
 			
 			if (i == this.currentItemIndex) {
 				gc.setStroke(Color.BLUE);
-				gc.strokeRect(currentItem.getX() + 2, currentItem.getY() + 2, currentItem.getWidth() - 4, currentItem.getHeight() - 4);
+				if (currentItem.getRotated()) {
+					double diff = (currentItem.getWidth() - currentItem.getHeight())/2 ;
+					gc.strokeRect(currentItem.getX() + diff + 2, currentItem.getY() - diff + 2, currentItem.getHeight() - 4, currentItem.getWidth() - 4);
+				} else {
+					gc.strokeRect(currentItem.getX() + 2, currentItem.getY() + 2, currentItem.getWidth() - 4, currentItem.getHeight() - 4);
+				}
+				
 			}
 		}
 		drawLayering();
@@ -249,14 +339,29 @@ public class EditeurLayoutController {
 				Item currItem_2 = this.currentProjet.getItemList().get(j);
 				
 				if (i != j) {
-					for (double x = currItem_1.getX(); x <= currItem_1.getX() + currItem_1.getWidth(); x++) {
-						for (double y = currItem_1.getY(); y <=currItem_1.getY() + currItem_1.getHeight(); y++) {
-							if (currItem_2.isIn(x, y)) {
-								gc.setStroke(Color.RED);
-								gc.strokeRect(currItem_1.getX(), currItem_1.getY(), currItem_1.getWidth(), currItem_1.getHeight());
+					if (currItem_1.getRotated()) {
+						double diff = (currItem_1.getWidth() - currItem_1.getHeight())/2 ;
+						for (double x = currItem_1.getX() + diff; x <= currItem_1.getX() + diff + currItem_1.getHeight(); x++) {
+							for (double y = currItem_1.getY() - diff; y <=currItem_1.getY() - diff + currItem_1.getWidth(); y++) {
+								if (currItem_2.isIn(x, y)) {
+									gc.setStroke(Color.RED);
+									gc.strokeRect(currItem_1.getX() + diff, currItem_1.getY() - diff, currItem_1.getHeight(), currItem_1.getWidth());
+									
+									
+								}
+							}
+						}
+					} else {
+						for (double x = currItem_1.getX(); x <= currItem_1.getX() + currItem_1.getWidth(); x++) {
+							for (double y = currItem_1.getY(); y <=currItem_1.getY() + currItem_1.getHeight(); y++) {
+								if (currItem_2.isIn(x, y)) {
+									gc.setStroke(Color.RED);
+									gc.strokeRect(currItem_1.getX(), currItem_1.getY(), currItem_1.getWidth(), currItem_1.getHeight());
+								}
 							}
 						}
 					}
+					
 				}
 			}
 		}

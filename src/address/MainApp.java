@@ -51,10 +51,8 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("KitchenApp");
 		this.projetsList = new ArrayList<Projet>(0);
-		this.projetsList.add(initExampleProjet());
 		
 		initRootLayout();
-//		showEditorCatalogue();
 		showAccueil();
 	}
 	
@@ -301,23 +299,6 @@ public ObservableList<Type> getLumiereEtDecorationData() {
         alert.setContentText(message);
 
         alert.showAndWait();
-	}
-	
-	public Projet initExampleProjet() throws MalformedURLException {
-		Projet res  = new Projet ("Example project", 10, 10);
-		
-		String url = "src/address/Images/Default/ExempleItem.png";
-		Item item_1 = new Item("Table_cuisson", 0, 0, 20, 15, url);
-		Item item_2 = new Item("Plan de travail", 50, 50, 70, 20, url);
-		Item item_3 = new Item("Frigo", 100, 100, 10, 10, url);
-		Item item_4 = new Item("Four", 150, 200, 30, 30, url);
-		
-		res.addItem(item_1);
-		res.addItem(item_2);
-		res.addItem(item_3);
-		res.addItem(item_4);
-		
-		return res;
 	}
 
 	public static void main(String[] args) {
