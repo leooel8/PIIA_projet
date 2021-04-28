@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="851.0" prefWidth="1000.0" stylesheets="@modena.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.AccueilLayoutController">
    <children>
-      <ImageView fx:id="projet_PreviewImage" fitHeight="851.0" fitWidth="1000.0" layoutX="118.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="851.0" fitWidth="1000.0" layoutX="118.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <viewport>
             <Rectangle2D minX="10.0" />
          </viewport>
