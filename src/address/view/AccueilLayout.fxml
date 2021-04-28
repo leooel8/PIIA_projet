@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="851.0" prefWidth="1000.0" stylesheets="@modena.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.AccueilLayoutController">
+<AnchorPane stylesheets="@modena.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.AccueilLayoutController">
    <children>
-      <ImageView fx:id="projet_PreviewImage" fitHeight="851.0" fitWidth="1000.0" layoutX="118.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <viewport>
-            <Rectangle2D minX="10.0" />
-         </viewport></ImageView>
-      <Button alignment="CENTER" defaultButton="true" layoutX="402.0" layoutY="198.0" mnemonicParsing="false" onAction="#handleProjectButton" prefHeight="46.0" prefWidth="224.0" style="-fx-background-color: turquoise; -fx-font-weight: bold; -fx-border-color: darkturquoise; -fx-border-radius: 20; -fx-background-radius: 20;" text="Commencer un projet" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="402.0" AnchorPane.topAnchor="198.0">
-         <font>
-            <Font name="Arial" size="18.0" />
-         </font></Button>
-      <Label layoutX="76.0" layoutY="440.0" text="Modifiez la disposition à l'infini" textFill="#b1ffe5" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="440.0">
+      <BorderPane prefHeight="798.6666666666666" prefWidth="1001.3333333333334" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fx:id="projet_PreviewImage" fitHeight="851.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <viewport>
+                  <Rectangle2D minX="10.0" />
+               </viewport>
+               <image>
+                  <Image url="@../Images/Default/Cuisine_2.png" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="28.0" layoutY="191.0" prefHeight="608.0" prefWidth="973.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0">
+         <center>
+            <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#handleProjectButton" prefHeight="46.0" prefWidth="224.0" style="-fx-background-color: turquoise; -fx-font-weight: bold; -fx-border-color: darkturquoise; -fx-border-radius: 20; -fx-background-radius: 20;" text="Commencer un projet" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </center>
+      </BorderPane>
+      <Label text="Modifiez la disposition à l'infini" textFill="#b1ffe5" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="486.0">
          <font>
             <Font name="Britannic Bold" size="30.0" />
          </font>
@@ -26,7 +45,7 @@
             <Glow />
          </effect>
       </Label>
-      <Label layoutX="76.0" layoutY="356.0" text="Choisissez vos meubles préférés" textFill="#b1ffe5" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="356.0">
+      <Label text="Choisissez vos meubles préférés" textFill="#b1ffe5" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="411.0">
          <font>
             <Font name="Britannic Bold" size="30.0" />
          </font>
@@ -34,7 +53,7 @@
             <Glow />
          </effect>
       </Label>
-      <Label layoutX="76.0" layoutY="399.0" text="Editez la cuisine de vos rêves" textFill="#b2ffe6" wrapText="true" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="399.0">
+      <Label text="Editez la cuisine de vos rêves" textFill="#b2ffe6" wrapText="true" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="447.0">
          <font>
             <Font name="Britannic Bold" size="30.0" />
          </font>
