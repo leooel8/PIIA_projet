@@ -30,6 +30,8 @@ public class EditeurLayoutController {
 	@FXML
 	private ImageView item_PreviewImage;
 	@FXML
+	private Label projet_NameLabel;
+	@FXML
 	private Label projet_WidthLabel;
 	@FXML
 	private Label projet_HeightLabel;
@@ -49,7 +51,6 @@ public class EditeurLayoutController {
 	private double y_souris;
 	private int scale;
 	private GraphicsContext gc;
-	private boolean inNavigate;
 	private Projet lastState;
 	private Projet previousState;
 	private ArrayList<Projet> historic;
@@ -57,7 +58,6 @@ public class EditeurLayoutController {
 
 	public EditeurLayoutController() {
 		enDeplacement = false;
-		inNavigate = false;
 		historic = new ArrayList<Projet>(0);
 		cirotsih = new ArrayList<Projet>(0);
 	}
@@ -65,6 +65,7 @@ public class EditeurLayoutController {
 	public void setCanvas() throws Exception {
 		this.findScale();
 		this.canvas = new Canvas(this.currentProjet.getWidth()*scale, this.currentProjet.getHeight()*scale);
+		this.projet_NameLabel.setText(currentProjet.getName());
 		this.projet_WidthLabel.setText(Integer.toString(this.currentProjet.getWidth()));
 		this.projet_HeightLabel.setText(Integer.toString(this.currentProjet.getHeight()));
 		
@@ -113,7 +114,7 @@ public class EditeurLayoutController {
 		for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
 			if (this.currentProjet.getItemList().get(i).isIn(e.getX(), e.getY())) {
 				lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
-				this.historic.add(0, lastState);
+				this.addStateToHistoric(true);
 				this.currentItemIndex = i;
 				this.enDeplacement = true;
 				this.cirotsih = new ArrayList<Projet>(0);
@@ -152,12 +153,6 @@ public class EditeurLayoutController {
 				}
 			}
 			
-			
-			
-			
-			
-			
-			
 			this.x_souris = e.getX();
 			this.y_souris = e.getY();
 			this.drawCanvas();
@@ -187,16 +182,12 @@ public class EditeurLayoutController {
 	}
 	
 	@FXML
-	private void handleNavigate() {
-		this.inNavigate = true;
-	}
-	
-	@FXML
 	private void handleCancelButton() throws Exception {
 		if (this.historic.size() != 0) {
 			this.addStateToHistoric(false);
 			this.currentProjet = this.historic.get(0);
 			this.historic.remove(0);
+			this.currentItemIndex = this.currentProjet.getItemList().size() - 1;
 			this.drawCanvas();
 		}
 	}
@@ -213,6 +204,9 @@ public class EditeurLayoutController {
 	@FXML
 	private void handleAddButton() throws Exception {
 		boolean addClicked = this.mainApp.showEditorCatalogue(this);
+		if (addClicked) {
+			this.drawCanvas();
+		}
 	}
 	
 	@FXML
@@ -220,18 +214,16 @@ public class EditeurLayoutController {
 		if (this.currentProjet.getItemList().size() != 0) {
 			this.addStateToHistoric(true);
 			this.currentProjet.getItemList().remove(currentItemIndex);
+			currentItemIndex = this.currentProjet.getItemList().size() - 1;
 			this.drawCanvas();
-			
 		}
 	}
 	
 	@FXML
-	private void handleUseButton() {
-		System.out.println(this.cirotsih.size());
-	}
-	
-	@FXML
-	private void handlRotateButton() {
+	private void handlRotateButton() throws Exception {
+		System.out.println("Before" + historic.size());
+		this.addStateToHistoric(true);
+		System.out.println("After" + historic.size());
 		currentProjet.getItemList().get(currentItemIndex).rotateRight(this.canvas);
 		drawCanvas();
 	}
@@ -258,7 +250,6 @@ public class EditeurLayoutController {
 			previousState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
 			this.cirotsih.add(0, previousState);
 		}
-		
 	}
 	
 	private int findScale() {
@@ -288,7 +279,7 @@ public class EditeurLayoutController {
 		return scale;
 	}
 	
-	public void drawCanvas() {
+	public Canvas drawCanvas() {
 		if (currentProjet.getItemList().size() != 0) {
 			this.item_NameLabel.setText(currentProjet.getItemList().get(currentItemIndex).getName());
 			this.item_XLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getWidth()));
@@ -310,26 +301,30 @@ public class EditeurLayoutController {
 		gc.setStroke(Color.BLACK);
 		gc.strokeRect(2, 2, canvas.getWidth() - 2, canvas.getHeight()-2);
 		
-		for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
-			Item currentItem = this.currentProjet.getItemList().get(i);
-			if (currentItem.getRotation() != 0) {
-				currentItem.drawTest(gc);
-			} else {
-				currentItem.draw(gc);
-			}
-			
-			if (i == this.currentItemIndex) {
-				gc.setStroke(Color.BLUE);
-				if (currentItem.getRotated()) {
-					double diff = (currentItem.getWidth() - currentItem.getHeight())/2 ;
-					gc.strokeRect(currentItem.getX() + diff + 2, currentItem.getY() - diff + 2, currentItem.getHeight() - 4, currentItem.getWidth() - 4);
+		if (currentProjet.getItemList().size() != 0) {
+			for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
+				Item currentItem = this.currentProjet.getItemList().get(i);
+				if (currentItem.getRotation() != 0) {
+					currentItem.drawTest(gc);
 				} else {
-					gc.strokeRect(currentItem.getX() + 2, currentItem.getY() + 2, currentItem.getWidth() - 4, currentItem.getHeight() - 4);
+					currentItem.draw(gc);
 				}
 				
+				if (i == this.currentItemIndex) {
+					gc.setStroke(Color.BLUE);
+					if (currentItem.getRotated()) {
+						double diff = (currentItem.getWidth() - currentItem.getHeight())/2 ;
+						gc.strokeRect(currentItem.getX() + diff + 2, currentItem.getY() - diff + 2, currentItem.getHeight() - 4, currentItem.getWidth() - 4);
+					} else {
+						gc.strokeRect(currentItem.getX() + 2, currentItem.getY() + 2, currentItem.getWidth() - 4, currentItem.getHeight() - 4);
+					}
+					
+				}
 			}
+			drawLayering();
 		}
-		drawLayering();
+			
+		return this.canvas;
 	}
 	
 	public void drawLayering() {

@@ -1,10 +1,15 @@
 package address.view;
 
 import address.MainApp;
+import address.modele.Item;
 import address.modele.Projet;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -21,6 +26,8 @@ public class ProjetsLayoutController {
 	private Label projet_nameLabel;
 	@FXML
 	private Label projet_dimensionLabel;
+	@FXML
+	private Canvas canvas;
 	
 	private MainApp mainApp;
 	private Stage stage;
@@ -40,9 +47,10 @@ public class ProjetsLayoutController {
 		this.stage = stage;
 	}
 	public void setFields() {
-		projet_nameField.setText("");
-		projet_XField.setText("");
-		projet_YField.setText("");
+		
+			projet_nameField.setText("");
+			projet_XField.setText("");
+			projet_YField.setText("");
 	}
 	public void setProjet(Projet projet, int index) {
 		this.projet_nameLabel.setText(projet.getName());
@@ -59,8 +67,8 @@ public class ProjetsLayoutController {
 			Projet projet = new Projet(name, xDim, yDim);
 			this.mainApp.getProjetsList().add(projet);
 			this.mainApp.alertProjetCreation();
-			setFields();
 			setProjet(this.mainApp.getProjetsList().get(this.mainApp.getProjetsList().size() - 1), this.mainApp.getProjetsList().size() - 1);
+			setFields();
 		}
 	}
 	
@@ -148,5 +156,5 @@ public class ProjetsLayoutController {
             return false;
 		}
 	}
-
+	
 }

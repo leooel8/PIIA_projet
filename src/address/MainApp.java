@@ -164,13 +164,15 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 			ProjetsLayoutController controller = loader.getController();
 			controller.setMainApp(this);
 			controller.setProjetStage(primaryStage);
-			controller.setFields();
+			
+			System.out.println(projetsList.size());
 			if (this.projetsList.size() != 0) {
 				controller.setProjet(this.projetsList.get(this.projetsList.size() - 1), this.projetsList.size() - 1);
 			} else {
 				Projet projet = new  Projet("Aucun projet existant", 0, 0);
 				controller.setProjet(projet, -1);
 			}
+			controller.setFields();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
