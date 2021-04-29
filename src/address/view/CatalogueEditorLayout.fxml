@@ -6,35 +6,65 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="291.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.CatalogueEditorLayoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.CatalogueEditorLayoutController">
    <children>
       <SplitPane dividerPositions="0.21618037135278517" layoutX="137.0" prefHeight="291.0" prefWidth="893.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="481.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="289.0" prefWidth="481.0" style="-fx-background-color: white; -fx-border-color: brown; -fx-border-width: 3;">
                <children>
-                  <Label layoutX="13.0" layoutY="26.0" text="Electroménager" />
-                  <Label layoutX="13.0" layoutY="140.0" text="Mobilier" />
-                  <Label layoutX="13.0" layoutY="225.0" text="Lumières &amp; Décorations" />
-                  <Hyperlink layoutX="12.0" layoutY="38.0" onAction="#handleTypesLink" text="Fours" />
-                  <Hyperlink layoutX="12.0" layoutY="51.0" onAction="#handleTypesLink" text="Micro-ondes" />
-                  <Hyperlink layoutX="12.0" layoutY="64.0" onAction="#handleTypesLink" text="Tables de cuisson" />
-                  <Hyperlink layoutX="12.0" layoutY="77.0" onAction="#handleTypesLink" text="Lave-vaisselles" />
-                  <Hyperlink layoutX="12.0" layoutY="90.0" onAction="#handleTypesLink" text="Hottes" />
-                  <Hyperlink layoutX="12.0" layoutY="104.0" onAction="#handleTypesLink" text="Réfrigérateurs &amp; Congélateurs" />
-                  <Hyperlink layoutX="12.0" layoutY="153.0" onAction="#handleTypesLink" text="Tables" />
-                  <Hyperlink layoutX="12.0" layoutY="179.0" onAction="#handleTypesLink" text="Plans de travail" />
-                  <Hyperlink layoutX="12.0" layoutY="192.0" onAction="#handleTypesLink" text="Dessertes &amp; îlots de cuisine" />
-                  <Hyperlink layoutX="12.0" layoutY="118.0" onAction="#handleTypesLink" text="Eviers" />
-                  <Hyperlink layoutX="12.0" layoutY="205.0" onAction="#handleTypesLink" text="Chaises" />
-                  <Hyperlink layoutX="12.0" layoutY="238.0" onAction="#handleTypesLink" text="Lampes murales" />
-                  <Hyperlink layoutX="12.0" layoutY="251.0" onAction="#handleTypesLink" text="Plafonniers" />
-                  <Hyperlink layoutX="12.0" layoutY="264.0" onAction="#handleTypesLink" text="Plantes" />
-                  <Label layoutX="41.0" layoutY="4.0" prefHeight="17.0" prefWidth="127.0" text="Catalogue de cuisine" />
-                  <Hyperlink layoutX="13.0" layoutY="166.0" onAction="#handleTypesLink" text="Etagères" AnchorPane.leftAnchor="13.0" />
+                  <Label layoutX="9.0" layoutY="4.0" prefHeight="21.0" prefWidth="176.0" style="-fx-underline: true;" text="Catalogue de cuisine :">
+                     <font>
+                        <Font name="Century Gothic" size="15.0" />
+                     </font></Label>
+                  <Label layoutX="15.0" layoutY="26.0" text="Electroménager">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="140.0" text="Mobilier">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Label layoutX="15.0" layoutY="225.0" text="Lumière &amp; Décoration">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Label>
+                  <Hyperlink layoutX="14.0" layoutY="38.0" onAction="#handleTypesLink" style="-fx-border-color: transparent; -fx-text-fill: black;" text="Fours" />
+                  <Hyperlink layoutX="14.0" layoutY="51.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Micro-ondes" />
+                  <Hyperlink layoutX="14.0" layoutY="64.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Tables de cuisson" />
+                  <Hyperlink layoutX="14.0" layoutY="77.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Lave-vaisselles" />
+                  <Hyperlink layoutX="14.0" layoutY="90.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Hottes" />
+                  <Hyperlink layoutX="14.0" layoutY="104.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Réfrigérateurs &amp; Congélateurs" />
+                  <Hyperlink layoutX="14.0" layoutY="153.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Tables" />
+                  <Hyperlink layoutX="14.0" layoutY="179.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Plans de travail" />
+                  <Hyperlink layoutX="14.0" layoutY="192.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Dessertes &amp; îlots de cuisine" />
+                  <Hyperlink layoutX="14.0" layoutY="117.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Eviers" />
+                  <Hyperlink layoutX="14.0" layoutY="205.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Chaises" />
+                  <Hyperlink layoutX="14.0" layoutY="238.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Lampes murales" />
+                  <Hyperlink layoutX="14.0" layoutY="252.0" onAction="#handleTypesLink" style="-fx-text-fill: blue; -fx-border-color: transparent;" text="Plafonniers" />
+                  <Hyperlink layoutX="14.0" layoutY="265.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Plantes" />
+                  <Hyperlink layoutX="12.0" layoutY="165.0" onAction="#handleTypesLink" style="-fx-text-fill: black; -fx-border-color: transparent;" text="Etagères" AnchorPane.leftAnchor="12.0" />
+                  <Circle layoutX="11.0" layoutY="51.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="64.0" radius="3.0" stroke="#1d8ffb" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="77.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="90.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="103.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="116.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="129.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="165.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="178.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="191.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="204.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="217.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="252.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="11.0" layoutY="264.0" radius="3.0" stroke="#1f93ff" strokeType="INSIDE" />
+                  <Circle layoutX="11.0" layoutY="277.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="263.0" prefWidth="364.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="263.0" prefWidth="364.0" style="-fx-background-color: white;">
                <children>
                   <Canvas fx:id="canvas" height="291.0" layoutX="-1.0" layoutY="-1.0" width="695.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button layoutX="629.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" />
