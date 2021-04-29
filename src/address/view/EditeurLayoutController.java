@@ -320,10 +320,10 @@ public class EditeurLayoutController {
 					}
 					
 				}
-			}
-			drawLayering();
+			}		
+			drawLayering();	
 		}
-			
+		
 		return this.canvas;
 	}
 	

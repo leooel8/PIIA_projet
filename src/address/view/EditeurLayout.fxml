@@ -1,73 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="620.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.EditeurLayoutController">
+<BorderPane prefHeight="600.0" prefWidth="1100.0" style="-fx-border-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.EditeurLayoutController">
    <left>
-      <AnchorPane prefHeight="738.0" prefWidth="335.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="585.0" prefWidth="335.0" style="-fx-border-color: gray; -fx-border-radius: 20; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="157.0" layoutY="14.0" text="Dimensions" />
-            <ImageView fx:id="projet_PreviewImage" fitHeight="185.0" fitWidth="200.0" layoutX="88.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="projet_WidthLabel" layoutX="168.0" layoutY="41.0" text="15" />
-            <Label layoutX="196.0" layoutY="41.0" text="m" />
-            <Label fx:id="projet_HeightLabel" layoutX="32.0" layoutY="144.0" text="15" />
-            <Label layoutX="60.0" layoutY="144.0" text="m" />
-            <Label layoutX="144.0" layoutY="253.0" text="Item sélectionné" />
-            <Label layoutX="57.0" layoutY="298.0" text="Nom : " />
-            <Label fx:id="item_NameLabel" layoutX="103.0" layoutY="298.0" text="NomItem" />
-            <Label layoutX="57.0" layoutY="330.0" text="Dimensions : " />
-            <Label layoutX="79.0" layoutY="362.0" text="Longueur : " />
-            <Label layoutX="79.0" layoutY="400.0" text="Largeur : " />
-            <Label fx:id="item_XLabel" layoutX="143.0" layoutY="362.0" text="X" />
-            <Label fx:id="item_YLabel" layoutX="144.0" layoutY="400.0" text="Y" />
-            <Label layoutX="176.0" layoutY="362.0" text="cm" />
-            <Label layoutX="176.0" layoutY="400.0" text="cm" />
-            <ImageView fx:id="item_PreviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="88.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="77.0" layoutY="10.0" style="-fx-underline: true;" text="Dimensions de la cuisine">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font></Label>
+            <ImageView fx:id="projet_PreviewImage" fitHeight="185.0" fitWidth="200.0" layoutX="84.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="projet_WidthLabel" layoutX="169.0" layoutY="41.0" text="15">
+               <font>
+                  <Font name="Baskerville Old Face" size="19.0" />
+               </font></Label>
+            <Label layoutX="195.0" layoutY="44.0" text="m" />
+            <Label fx:id="projet_HeightLabel" layoutX="43.0" layoutY="149.0" text="15">
+               <font>
+                  <Font name="Baskerville Old Face" size="19.0" />
+               </font></Label>
+            <Label layoutX="67.0" layoutY="152.0" text="m" />
+            <Label layoutX="111.0" layoutY="274.0" style="-fx-underline: true;" text="Item sélectionné">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font></Label>
+            <Label layoutX="53.0" layoutY="306.0" text="Nom : ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="item_NameLabel" layoutX="98.0" layoutY="306.0" text="NomItem">
+               <font>
+                  <Font name="Bell MT" size="15.0" />
+               </font></Label>
+            <Label layoutX="17.0" layoutY="334.0" text="Dimensions : ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="93.0" layoutY="334.0" text="Longueur : " />
+            <Label layoutX="103.0" layoutY="351.0" text="Largeur : " />
+            <Label fx:id="item_XLabel" layoutX="160.0" layoutY="334.0" text="X">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label fx:id="item_YLabel" layoutX="161.0" layoutY="351.0" text="Y">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="184.0" layoutY="334.0" text="cm" />
+            <Label layoutX="184.0" layoutY="351.0" text="cm" />
+            <ImageView fx:id="item_PreviewImage" fitHeight="150.0" fitWidth="200.0" layoutX="76.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </left>
    <center>
-      <SplitPane dividerPositions="0.11346765641569459" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.11346765641569459" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-border-color: transparent;" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-border-color: gray; -fx-border-radius: 20; -fx-background-radius: 20;">
                <children>
-                  <SplitPane dividerPositions="0.591747146619842" layoutX="311.0" layoutY="-47.0" prefHeight="66.0" prefWidth="1542.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                           <children>
-                              <ButtonBar layoutX="-1.0" layoutY="12.0" prefHeight="40.0" prefWidth="359.0">
-                                <buttons>
-                                  <Button mnemonicParsing="false" style="-fx-background-radius: 10;" text="Naviguer" />
-                                    <Button maxHeight="25.0" maxWidth="29.0" minHeight="25.0" minWidth="29.0" mnemonicParsing="false" onAction="#handleZoomIn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="+" />
-                                    <Button mnemonicParsing="false" onAction="#handleZoomOut" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="-" />
-                                    <Button mnemonicParsing="false" onAction="#handleCancelButton" text="Annuler" />
-                                    <Button mnemonicParsing="false" onAction="#handleRetablirButton" text="Rétablir" />
-                                </buttons>
-                              </ButtonBar>
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                           <children>
-                              <ButtonBar layoutX="10.0" layoutY="12.0" prefHeight="40.0" prefWidth="282.0">
-                                <buttons>
-                                  <Button mnemonicParsing="false" onAction="#handleAddButton" text="Ajouter" />
-                                    <Button mnemonicParsing="false" onAction="#handleDeleteButton" text="Supprimer" />
-                                    <Button mnemonicParsing="false" onAction="#handlRotateButton" text="Rotate" />
-                                </buttons>
-                              </ButtonBar>
-                           </children></AnchorPane>
-                    </items>
-                  </SplitPane>
+                  <Button layoutX="522.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="31.0" prefWidth="73.0" text="Supprimer">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="644.0" layoutY="20.0" mnemonicParsing="false" onAction="#handlRotateButton" prefHeight="30.0" prefWidth="63.0" text="Rotate">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                <Button layoutX="434.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="32.0" prefWidth="65.0" text="Ajouter">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Line endX="315.33331298828125" endY="-2.582867864475702E-6" layoutX="71.0" startX="315.33331298828125" startY="290.6666564941406" stroke="#bebebe" strokeWidth="5.0" />
+                <Button layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-radius: 10;" text="Naviguer">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button graphicTextGap="2.0" layoutX="119.0" layoutY="22.0" maxHeight="25.0" maxWidth="36.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleZoomIn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" text="+" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="150.0" layoutY="22.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleZoomOut" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 15; -fx-border-radius: 15;" text="-">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="210.0" layoutY="22.0" minWidth="41.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="25.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="Annuler">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="284.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleRetablirButton" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="Rétablir">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <BorderPane fx:id="borderPane" layoutX="671.0" layoutY="338.0" prefHeight="700.0" prefWidth="621.0" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <BorderPane fx:id="borderPane" layoutX="671.0" layoutY="1.0" prefHeight="528.0" prefWidth="762.0" style="-fx-border-color: transparent;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor></BorderPane>
                </children>
             </AnchorPane>
         </items>
