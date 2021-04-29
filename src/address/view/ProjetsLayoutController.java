@@ -1,5 +1,8 @@
 package address.view;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import address.MainApp;
 import address.modele.Item;
 import address.modele.Projet;
@@ -12,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 
 public class ProjetsLayoutController {
@@ -28,6 +33,8 @@ public class ProjetsLayoutController {
 	private Label projet_dimensionLabel;
 	@FXML
 	private Canvas canvas;
+	@FXML
+	private ImageView projet_PreviewImage;
 	
 	private MainApp mainApp;
 	private Stage stage;
@@ -37,7 +44,11 @@ public class ProjetsLayoutController {
 	}
 	
 	@FXML
-	private void initialize() {
+	private void initialize() throws MalformedURLException {
+		File file = new File("src/address/Images/Default/Cuisine_Accueil.png");
+		String localURL = file.toURI().toURL().toString();
+		Image useImage = new Image(localURL);
+		this.projet_PreviewImage.setImage(useImage);
 	}
 	
 	public void setMainApp(MainApp mainApp) {
