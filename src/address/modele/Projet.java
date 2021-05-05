@@ -3,11 +3,12 @@ package address.modele;
 import java.util.ArrayList;
 
 public class Projet {
-	
+	//ATTRIBUTS
 	private String name;
 	private int width, height;
 	private ArrayList<Item> itemList;
 	
+	//CONSTRUCTEURS
 	public Projet(String name, int width, int height) {
 		this.name = name;
 		this.width = width;
@@ -34,6 +35,8 @@ public class Projet {
 		}
 	}
 	
+	//METHODES
+	//Getters et Setters
 	public String getName() { return this.name; }
 	public int getWidth() { return this.width; }
 	public int getHeight() {  return this.height; }
@@ -45,7 +48,6 @@ public class Projet {
 	public void removeItem(Item item) { this.itemList.remove(item); }
 	public void removeItemIndex(int index) { this.itemList.remove(index); }
 	
-	
 	public String toString() {
 		String res = "";
 		res += "Nom : " + this.name + "\n";
@@ -55,6 +57,9 @@ public class Projet {
 		return res;
 	}
 	
+	/*
+	 * Fonction affichant des logs relatifs aux items du projet
+	 * */
 	public String showItems() {
 		String res = "";
 		res += "	Item position : \n";

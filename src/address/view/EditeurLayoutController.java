@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class EditeurLayoutController {
-	
+	//ATTRIBUTS FXML
 	@FXML
 	private Label item_NameLabel;
 	@FXML
@@ -40,28 +40,34 @@ public class EditeurLayoutController {
 	@FXML
 	private BorderPane borderPane;
 	
+	//ATTRIBUTS
 	private Canvas canvas;
-	
 	private MainApp mainApp;
 	private Stage stage;
-	private int currentItemIndex;
-	private Projet currentProjet;
+	
+	private int currentItemIndex; //Index du projet en édition
+	private Projet currentProjet; //Etat actuel du projet en édition
 	private boolean enDeplacement;
-	private double x_souris;
+	private double x_souris; //Anciennes positions de la souris
 	private double y_souris;
-	private int scale;
+	
+	private int scale; //Valeur du multiplicateur appliqué aux dimensions du Canvas
+	
 	private GraphicsContext gc;
-	private Projet lastState;
+	
+	private Projet lastState; //Attributs utiles à la sauvegarde des états du projet pou les fonctions annuler et rétablir
 	private Projet previousState;
 	private ArrayList<Projet> historic;
 	private ArrayList<Projet> cirotsih;
 
+	//CONSTRUCTEUR
 	public EditeurLayoutController() {
 		enDeplacement = false;
 		historic = new ArrayList<Projet>(0);
 		cirotsih = new ArrayList<Projet>(0);
 	}
 	
+	//Getters et Setters
 	public void setCanvas() throws Exception {
 		this.findScale();
 		this.canvas = new Canvas(this.currentProjet.getWidth()*scale, this.currentProjet.getHeight()*scale);
@@ -105,6 +111,21 @@ public class EditeurLayoutController {
 		return this.currentProjet;
 	}
 	
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+	}
+	public void setProjetStage(Stage stage) {
+		this.stage = stage;
+	}
+	public void setCurrentItem(int item) {
+		this.currentItemIndex = item;
+	}
+	public void setCurrentProjet(Projet projet) throws Exception {
+		this.currentProjet =  projet;
+		this.addStateToHistoric(true);
+	}
+	
+	//METHODES FXML
 	@FXML
 	private void initialize() {
 	}
@@ -136,7 +157,10 @@ public class EditeurLayoutController {
 			double x_avant = this.currentProjet.getItemList().get(currentItemIndex).getX();
 			double y_avant = this.currentProjet.getItemList().get(currentItemIndex).getY();
 			
-			if (currItem.getRotated()) {
+			//La section suivante vérifie que le déplacement ne va pas faire sortir l'item du canvas (il 
+			//s'arretera aux bords mais ne les dépasserra pas)
+			
+			if (currItem.getRotated()) { //Les vérifications de bordures sont différentes selon si l'Item a subit une rotation ou non
 				double diff = (currItem.getWidth() - currItem.getHeight())/2 ;
 				if ((dx < 0 && currItem.getX() + dx + diff > 0) || (dx > 0 && currItem.getX() + diff + dx + currItem.getHeight() < canvas.getWidth())) {
 					this.currentProjet.getItemList().get(currentItemIndex).setX(x_avant + dx);
@@ -164,7 +188,6 @@ public class EditeurLayoutController {
 		if (enDeplacement) {
 			enDeplacement = false;
 		}
-		
 		
 		this.drawCanvas();
 	}
@@ -227,22 +250,12 @@ public class EditeurLayoutController {
 		currentProjet.getItemList().get(currentItemIndex).rotateRight(this.canvas);
 		drawCanvas();
 	}
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-	}
-	public void setProjetStage(Stage stage) {
-		this.stage = stage;
-	}
-	public void setCurrentItem(int item) {
-		this.currentItemIndex = item;
-	}
-	public void setCurrentProjet(Projet projet) throws Exception {
-		this.currentProjet =  projet;
-		this.addStateToHistoric(true);
-	}
 	
+	/*
+	 * Ajoute l'état actuel à l'historique ou à l'historique de l'historique pour la fonctionnalité rétablir (en première position pour faciliter sa recherche: 
+	 * lors d'une annulation, on récupère simplement le premier Projet de l'attribut historique)
+	 * */
 	public void addStateToHistoric(boolean historic) throws Exception {
-		
 		if (historic) {
 			lastState = new Projet(this.currentProjet.getName(), this.currentProjet.getWidth(), this.currentProjet.getHeight(), this.currentProjet.getItemList());
 			this.historic.add(0, lastState);
@@ -252,13 +265,18 @@ public class EditeurLayoutController {
 		}
 	}
 	
+	/*
+	 * Cette fonction permet, d'après les dimensions du projet données en mètre, de trouver le meilleur multiplicateur à appliquer aux Width et Height du Canvas.
+	 * Ce multiplicateur correspond en fait au nombres de pixels qui seront considéré comme 1 mètre pour l'affichage.
+	 * On effectue ici une recherche par dichotomie
+	 * */
 	private int findScale() {
 		scale = 100;
 		int lastScale = 100;
 		boolean  flag = true;
-		int count = 100;
+		int count = 100; //maximum d'itérations
 		while (flag) {
-			if (this.currentProjet.getWidth() * scale < 1542
+			if (this.currentProjet.getWidth() * scale < 1542 //1542 est la valeur de la width de la fenêtre considérée, 876 est la height
 					&&  this.currentProjet.getHeight() * scale < 876) {
 				if (count > 0) {
 					lastScale = scale;
@@ -279,7 +297,12 @@ public class EditeurLayoutController {
 		return scale;
 	}
 	
+	/*
+	 * Fonction d'affichage du canvas. Elle parcours chaques items du projet pour l'afficher avec la bonne rotation
+	 * */
 	public Canvas drawCanvas() {
+		//Affichage des informations à gauche du canvas
+		//Permet l'affichage notamment de l'item sélectionné
 		if (currentProjet.getItemList().size() != 0) {
 			this.item_NameLabel.setText(currentProjet.getItemList().get(currentItemIndex).getName());
 			this.item_XLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getWidth()));
@@ -327,6 +350,10 @@ public class EditeurLayoutController {
 		return this.canvas;
 	}
 	
+	/*
+	 * Vérifie si un item est sélectionné ou si deux items se chevauchent.
+	 * Si un item est sélectionné, un rectangle bleu est affiché. Si deux items se chevauchent, ils sont tous les deux entourés d'un rectangle rouge
+	 * */
 	public void drawLayering() {
 		for (int i = 0; i < this.currentProjet.getItemList().size(); i++) {
 			Item currItem_1 = this.currentProjet.getItemList().get(i);
@@ -347,6 +374,7 @@ public class EditeurLayoutController {
 							}
 						}
 					} else {
+						
 						for (double x = currItem_1.getX(); x <= currItem_1.getX() + currItem_1.getWidth(); x++) {
 							for (double y = currItem_1.getY(); y <=currItem_1.getY() + currItem_1.getHeight(); y++) {
 								if (currItem_2.isIn(x, y)) {
@@ -355,10 +383,13 @@ public class EditeurLayoutController {
 								}
 							}
 						}
+						
 					}
-					
 				}
+				
 			}
 		}
 	}
+	
+	
 }

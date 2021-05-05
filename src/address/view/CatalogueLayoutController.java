@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 
 public class CatalogueLayoutController {
 
+	//ATTRIBUTS FXML
 	@FXML
 	private TableView<Type> electromenagerTable=null; 
 	@FXML
@@ -28,23 +29,17 @@ public class CatalogueLayoutController {
 	@FXML
 	private Canvas canvas;
 
+	//ATTRIBUTS
 	private MainApp mainApp;
 	private Stage stage;
 
-	/**
-	 * The constructor.
-	 * The constructor is called before the initialize() method.
-	 */
+	//CONSTRUCTEUR
 	public CatalogueLayoutController() {
 	}
 
-	/**
-	 * Initializes the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 */
+	//METHODES FXML
 	@FXML
 	private void initialize() {
-
 
 		// Initialize the types tables with columns.  	
 		electromenagerColumn.setCellValueFactory(
@@ -69,12 +64,25 @@ public class CatalogueLayoutController {
 
 	}	
 
-	/**
-	 * Fills all text fields to show details about the items.
-	 * If the specified person is null, all text fields are cleared.
-	 *
-	 * @param person the person or null
-	 */
+	//Setters
+	public void setCanvas() {		
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
+	}
+
+	public void setProjetStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+		// Add observable list data to the table
+		electromenagerTable.setItems(mainApp.getElectromenagerData());
+		mobilierTable.setItems(mainApp.getMobilierData());
+		lumiereEtDecorationTable.setItems(mainApp.getLumiereEtDecorationData());      	
+	}
+
 	private void showImagesCatalogue(Type type) { 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		if (type != null) {		
@@ -104,29 +112,5 @@ public class CatalogueLayoutController {
 			setCanvas();
 		}
 	}
-
-	public void setCanvas() {		
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.setFill(Color.WHITE);
-		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
-	}
-
-	public void setProjetStage(Stage stage) {
-		this.stage = stage;
-	}
-
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
-		// Add observable list data to the table
-		electromenagerTable.setItems(mainApp.getElectromenagerData());
-		mobilierTable.setItems(mainApp.getMobilierData());
-		lumiereEtDecorationTable.setItems(mainApp.getLumiereEtDecorationData());      	
-	}
-
 
 }

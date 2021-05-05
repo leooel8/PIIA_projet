@@ -1,7 +1,5 @@
 package address.view;
 
-
-
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -12,15 +10,22 @@ import javafx.scene.image.ImageView;
 
 
 public class AccueilLayoutController {
-	
+	//ATTRIBUTS FXML
 	@FXML
 	private ImageView projet_PreviewImage;
 	
+	//ATTRIBUTS
 	private MainApp mainApp;
 	
+	//CONSTRUCTEUR
 	public AccueilLayoutController() {
 	}
 	
+	//METHODES FXML
+	
+	/*
+	 * Initialize l'affichage de l'accueil
+	 * */
 	@FXML
 	private void initialize() throws MalformedURLException {
 		File file = new File("src/address/Images/Default/Cuisine_2.png");
@@ -34,8 +39,9 @@ public class AccueilLayoutController {
 		 this.mainApp.showProjets();
 	}
 	
-	
-	
+	/*
+	 * Setter
+	 * */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}

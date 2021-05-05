@@ -1,19 +1,11 @@
 package address.modele;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public class Item {
@@ -48,20 +40,8 @@ public class Item {
 	public Item () throws MalformedURLException {
 	}
 	
-	public Item(int index) throws MalformedURLException {
-		this.name = "item " + index;
-		this.pos_x = 0;
-		this.pos_y  = 0;
-		this.height = 20;
-		this.width= 20;
-		
-		File file = new File("Images/default");
-		String localURL = file.toURI().toURL().toString();
-		this.image = new Image(localURL);
-	}
-	
 	//METHODES
-	
+	//Getters et setters
 	public String getName() { return this.name; }
 	public double getX() { return this.pos_x; }
 	public double getY() { return this.pos_y; }
@@ -82,13 +62,29 @@ public class Item {
 		String localURL = file.toURI().toURL().toString();
 		this.image = new Image(localURL);
 	}
+
+	public Item copy() throws Exception {
+		Item res = new Item();
+		res.setX(this.getX());
+		res.setY(this.getY());
+		res.setWidth(this.getWidth());
+		res.setHeight(this.getHeight());
+		res.setUrl(this.getUrl());
+		
+		return res;
+	}
 	
-	
+	/*
+	 * Fonction d'affichage de l'item
+	 * */
 	public void draw (GraphicsContext gc) {
 			gc.drawImage(this.image, this.pos_x, this.pos_y);
 		
 	}
 	
+	/*
+	 * Fonction d'affichage utilisée si l'item est tourné
+	 * */
 	public void drawTest (GraphicsContext gc) {
 		gc.save();
         rotate(gc, rotation, pos_x + width / 2, pos_y + height / 2);
@@ -96,6 +92,9 @@ public class Item {
         gc.restore();
 	}
 	
+	/*
+	 * Fonction qui tourne le GraphicsContext
+	 * */
 	private void rotate(GraphicsContext gc, double angle, double px,
             double py) {
         Rotate r = new Rotate(angle, px, py);
@@ -103,11 +102,9 @@ public class Item {
                 r.getTx(), r.getTy());
     }
 	
-	public void drawRect (GraphicsContext gc) {
-		gc.setFill(Color.BLACK);
-		gc.fillRect(this.pos_x, this.pos_y, this.width, this.height);
-	}
-	
+	/*
+	 * Vérifie si la position donnée en paramètre est contenue par l'item
+	 * */
 	public boolean isIn(double x, double y) {
 		if (rotated) {
 			double diff = (width - height)/2 ;
@@ -134,21 +131,13 @@ public class Item {
 		
 	}
 	
-	public Item copy() throws Exception {
-		Item res = new Item();
-		res.setX(this.getX());
-		res.setY(this.getY());
-		res.setWidth(this.getWidth());
-		res.setHeight(this.getHeight());
-		res.setUrl(this.getUrl());
-		
-		return res;
-	}
-	
+	/*
+	 * Fonction de rotation
+	 * */
 	public void rotateRight(Canvas canvas) {
 		double diff = (width - height)/2 ;
 		if (rotated) {
-			if (pos_x >= 0 && pos_x + width <= canvas.getWidth()) {
+			if (pos_x >= 0 && pos_x + width <= canvas.getWidth()) { //Vérifie que la rotation ne fera pas dépasser l'item de la zone de cuisine
 				this.rotation += 90;
 				rotated = false;
 			}
@@ -159,20 +148,5 @@ public class Item {
 			}
 		}
 		
-	}
-	
-	public void rotateLeft(Canvas canvas) {
-		double diff = (width - height)/2 ;
-		if (rotated) {
-			if (pos_x >= 0 && pos_x + width <= canvas.getWidth()) {
-				this.rotation -= 90;
-				rotated = false;
-			}
-		} else {
-			if (pos_y - diff >= 0 && pos_y + height + diff <= canvas.getHeight()) {
-				this.rotation -= 90;
-				rotated = true;
-			}
-		}
 	}
 }

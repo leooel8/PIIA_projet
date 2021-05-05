@@ -5,14 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 
 public class RootLayerController {
+	//ATTRIBUTS
 	private MainApp mainApp;
 
+	//METHODES FXML
 	@FXML
 	private void initialize() {
-	}
-	
-	public void setMainApp(MainApp mainApp)  {
-		this.mainApp = mainApp;
 	}
 	
 	@FXML
@@ -33,5 +31,11 @@ public class RootLayerController {
 	@FXML
 	private void handleCatalogueButton() {
 		this.mainApp.showCatalogue();
+	}
+	
+	//METHODES
+	//Setters
+	public void setMainApp(MainApp mainApp)  {
+		this.mainApp = mainApp;
 	}
 }

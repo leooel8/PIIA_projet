@@ -1,13 +1,11 @@
 
 package address.view;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import address.MainApp;
 import address.modele.Item;
 import address.modele.Type;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,10 +15,12 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.input.MouseEvent;
 
 public class CatalogueEditorLayoutController {
-
+	
+	//ATTRIBUTS FXML
 	@FXML
 	private Canvas canvas;
 	
+	//ATTRIBUTS
 	ArrayList<Type> types= new ArrayList<Type>();
 	Type currentType;
 	Item currentItem;
@@ -30,27 +30,80 @@ public class CatalogueEditorLayoutController {
 	private EditeurLayoutController editeur;
 	private boolean addClicked = false;
 
-	
-
-	/**
-	 * The constructor.
-	 * The constructor is called before the initialize() method.
-	 */
+	//CONSTRUCTEUR
 	public CatalogueEditorLayoutController() {
 	}
 
-	
+	//METHODES FXML
 	@FXML
 	private void initialize() {
 	}
+
+	@FXML
+	private void handleTypesLink(ActionEvent e) {
+		//canvas.
+		for (Type type : this.mainApp.getTypesList()) {
+			Hyperlink hyp=(Hyperlink) e.getSource();
+			if(type.getTypeName().equals(hyp.getText())) {
+				this.currentType = type;
+				showImagesCatalogue();
+				break;
+			}
+		}
+	}
 	
-	/**
-	 * Fills all text fields to show details about the items.
-	 * If the specified person is null, all text fields are cleared.
-	 *
-	 * @param person the person or null
-	 */
-	private void showImagesCatalogue() { ////////////////////////////////////////////Typelist<item>
+	@FXML
+	private void handleAddButton() throws Exception {
+		Item res = new Item(currentItem.getName(), currentItem.getX(), currentItem.getY(), currentItem.getWidth(), currentItem.getHeight(), currentItem.getUrl());
+		this.editeur.getCurrentProjet().addItem(res);
+		this.editeur.drawCanvas();
+	}
+	
+	//METHODES
+	
+	/*
+	 * Sélectionne un Item
+	 * */
+	public void attrape(MouseEvent e) {
+		if(currentType != null) {
+			for (int i = 0; i < currentType.getItemsList().size(); i++) {
+				if (currentType.getItemsList().get(i).isIn(e.getX(), e.getY())) {
+					this.currentItem = currentType.getItemsList().get(i);
+				}
+			}
+		}
+		showImagesCatalogue();
+	}
+	
+	//Getters et Setters
+	public void setCanvas() {	
+		canvas.setOnMouseClicked(e -> {
+			attrape(e);
+		});
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		gc.setFill(Color.WHITE);
+		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
+	}
+	
+	public void setEditeur(EditeurLayoutController editeur) {
+		this.editeur = editeur;
+	}
+
+	public void setProjetStage(Stage stage) {
+		this.stage = stage;
+	}
+	
+	public boolean isAddClicked() {
+		return addClicked;
+	}
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;	      	
+	}
+	
+	/*
+	 * Affiche les images dans le catalogue
+	 * */
+	private void showImagesCatalogue() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		if (currentType != null) {		
 			setCanvas();		
@@ -89,66 +142,6 @@ public class CatalogueEditorLayoutController {
 			// catalogue is null, remove all the text.
 			setCanvas();
 		}
-	}
-
-	@FXML
-	private void handleTypesLink(ActionEvent e) {
-		//canvas.
-		for (Type type : this.mainApp.getTypesList()) {
-			Hyperlink hyp=(Hyperlink) e.getSource();
-			if(type.getTypeName().equals(hyp.getText())) {
-				this.currentType = type;
-				showImagesCatalogue();
-				break;
-			}
-		}
-	}
-	@FXML
-	private void handleAddButton() throws Exception {
-		Item res = new Item(currentItem.getName(), currentItem.getX(), currentItem.getY(), currentItem.getWidth(), currentItem.getHeight(), currentItem.getUrl());
-		this.editeur.getCurrentProjet().addItem(res);
-		this.editeur.drawCanvas();
-	}
-	
-	public void attrape(MouseEvent e) {
-		if(currentType != null) {
-			for (int i = 0; i < currentType.getItemsList().size(); i++) {
-				if (currentType.getItemsList().get(i).isIn(e.getX(), e.getY())) {
-					this.currentItem = currentType.getItemsList().get(i);
-				}
-			}
-		}
-		showImagesCatalogue();
-	}
-
-	public void setCanvas() {	
-		canvas.setOnMouseClicked(e -> {
-			attrape(e);
-		});
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.setFill(Color.WHITE);
-		gc.fillRect(0,0,this.canvas.getWidth(),this.canvas.getHeight());
-	}
-	
-	public void setEditeur(EditeurLayoutController editeur) {
-		this.editeur = editeur;
-	}
-
-	public void setProjetStage(Stage stage) {
-		this.stage = stage;
-	}
-	
-	public boolean isAddClicked() {
-		return addClicked;
-	}
-
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;	      	
 	}
 
 }

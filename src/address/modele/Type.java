@@ -5,34 +5,22 @@ import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * Model class for a Person.
- *
- * @author Marco Jakob
- */
 public class Type {
-
+	//ATTRIBUTS
 	private final StringProperty typeName;
 	private final ArrayList<Item> items;
 
-	/**
-	 * Default constructor.
-	 */
+	//CONSTRUCTEURS
 	public Type() {
 		this(null, null);
 	}
 	
-	/**
-	 * Constructor with some initial data.
-	 * 
-	 * @param typeName
-	 * @param lesItems
-	 */
 	public Type(String typeName, ArrayList<Item> lesItems) {
 		this.typeName = new SimpleStringProperty(typeName);
 		this.items=lesItems;
 	}
 	
+	//Getters et Setters
 	public String getTypeName() {
 		return typeName.get();
 	}

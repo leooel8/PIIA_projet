@@ -27,26 +27,33 @@ import address.modele.Type;
 
 public class MainApp extends Application {
 	
+	//ATTRIBUTS
 	private Stage primaryStage;
+	
+	//Différents layouts
 	private BorderPane rootLayout;
 	private AnchorPane accueilLayout;
 	private BorderPane editeurLayout;
 	private AnchorPane projetsLayout;
 	private AnchorPane catalogueLayout;
+	
+	//Liste de projets, vide initialement
 	private ArrayList<Projet> projetsList;
+	
 	private int currentProjetIndex;
 	
-	
-	
+	//Attributs relatifs aux différentes catégories d'items
 	ArrayList<Type> typesListe= new ArrayList<Type>();
-	/** The datas as  observables lists of categories.*/
+
 	private ObservableList<Type> electromenagerData = FXCollections.observableArrayList();
 	private ObservableList<Type> mobilierData = FXCollections.observableArrayList();
 	private ObservableList<Type> lumiereEtDecorationData = FXCollections.observableArrayList();
 
-	public MainApp() throws MalformedURLException{
-		chargeImagesEtTypes();
-	}
+	//METHODES
+	
+	/*
+	 * Methode start, obligatoire lorsqu'une classe implémente Application. Elle initalise l'application entière
+	 * */
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("KitchenApp");
@@ -56,6 +63,12 @@ public class MainApp extends Application {
 		showAccueil();
 	}
 	
+	/*
+	 * Deux fonctions nécessaires au bon chargement des données du catalogue
+	 * */
+	public MainApp() throws MalformedURLException{
+		chargeImagesEtTypes();//cahrge les différents itemss
+	}
 	private void chargeImagesEtTypes() throws MalformedURLException {
 		
 		File dossierPrincipal = new File("images/");  //on va dans le dossier images
@@ -85,6 +98,9 @@ public class MainApp extends Application {
 		}
 	}
 	
+	/*
+	 * Fonction d'initialisation du RootLayout, base du visuelle du projet
+	 * */
 	public void initRootLayout() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -103,22 +119,37 @@ public class MainApp extends Application {
 	}
 	
 
-
-public ObservableList<Type> getElectromenagerData() {
-	return electromenagerData;
-}
-
-public ObservableList<Type> getMobilierData() {
-	return mobilierData;
-}
-
-public ObservableList<Type> getLumiereEtDecorationData() {
-	return lumiereEtDecorationData;
-}
-
+	//Getters et setters
+	public ObservableList<Type> getElectromenagerData() {
+		return electromenagerData;
+	}
+	
+	public ObservableList<Type> getMobilierData() {
+		return mobilierData;
+	}
+	
+	public ObservableList<Type> getLumiereEtDecorationData() {
+		return lumiereEtDecorationData;
+	}
+	
+	public void setCurrentProjet (int index) {
+		this.currentProjetIndex = index;
+	}
+	
+	public ArrayList<Type> getTypesList(){ return this.typesListe;}
+	
+	public ArrayList<Projet> getProjetsList() { return this.projetsList; }
+	
+	public Projet getProjetIndex(int index) { return this.projetsList.get(index); }
+	
+	//METHODES RELATIVES A L'AFFICHAGE DES DIFFERENTES PAGES DE L'APPLICATION
+	
+	/*
+	 * Affichage de la page d'accueil
+	 * */
 	public void showAccueil() {
 		try {
-			if (this.editeurLayout != null) {
+			if (this.editeurLayout != null) { //On vérifie qu'aucune autre page n'est actuellement affichée
 				if (this.editeurLayout.isVisible()) {
 					this.editeurLayout.setVisible(false);
 				}
@@ -129,13 +160,13 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 				}
 			}
 			
-			FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader(); //On charge le fichier FXML correspondant
 			loader.setLocation(MainApp.class.getResource("view/AccueilLayout.fxml"));
 			accueilLayout = (AnchorPane) loader.load();
 			
-			rootLayout.setCenter(accueilLayout);
+			rootLayout.setCenter(accueilLayout); //On greffe la page au centre du RootLayout
 			
-			AccueilLayoutController controller = loader.getController();
+			AccueilLayoutController controller = loader.getController(); //On instancie le controleur
 			controller.setMainApp(this);
 			
 		} catch(IOException  e) {
@@ -143,9 +174,12 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		}
 	}
 	
+	/*
+	 * Affichage de la page de création et de choix de projet
+	 * */
 	public void showProjets() {
 		try {
-			if(this.editeurLayout!=null) {
+			if(this.editeurLayout!=null) { //On vérifie qu'aucune autre page n'est actuellement affichée
 				if (this.editeurLayout.isVisible()) {
 					this.editeurLayout.setVisible(false);
 				}
@@ -155,13 +189,13 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 				this.accueilLayout.setVisible(false);
 			}
 			
-			FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader(); //On charge le fichier FXML correspondant
 			loader.setLocation(MainApp.class.getResource("view/ProjetsLayout.fxml"));
 			projetsLayout = (AnchorPane) loader.load();
 			
-			rootLayout.setCenter(projetsLayout);
+			rootLayout.setCenter(projetsLayout); //On greffe la page au centre du RootLayout
 			
-			ProjetsLayoutController controller = loader.getController();
+			ProjetsLayoutController controller = loader.getController(); //On instancie le controleur
 			controller.setMainApp(this);
 			controller.setProjetStage(primaryStage);
 			
@@ -178,7 +212,9 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 			e.printStackTrace();
 		}
 	}
-	
+	 /*
+	  * Affichage de la page de l'Editeur
+	  * */
 	public void showEditeur() throws Exception {
 		try {
 			if (this.accueilLayout != null) {
@@ -213,6 +249,9 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		}
 	}
 	
+	/*
+	 * Affichage de la page du catalogue
+	 * */
 	public void showCatalogue() {
 		try {
 			if (this.accueilLayout != null) {
@@ -242,19 +281,22 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		}
 	}
 	
+	/*
+	 * Affichage d'une nouvelle fenêtre qui montre le catalogue de l'éditeur, permettant d'ajouter des items au projet
+	 * */
 	public boolean showEditorCatalogue(EditeurLayoutController editeur) {
 		try {			
-			FXMLLoader loader = new FXMLLoader();	
+			FXMLLoader loader = new FXMLLoader(); //On charge le fichier FXML
 			loader.setLocation(MainApp.class.getResource("view/CatalogueEditorLayout.fxml"));
 			catalogueLayout = (AnchorPane)loader.load();			
 			
-			Stage catalogueStage = new Stage();
+			Stage catalogueStage = new Stage(); //On crée un nouveau stage
 			catalogueStage.setTitle("Catalogue");
 			catalogueStage.initModality(Modality.WINDOW_MODAL);
-			Scene scene = new Scene(catalogueLayout);
+			Scene scene = new Scene(catalogueLayout); //On crée une nouvelle Scene
 			catalogueStage.setScene(scene);
 			
-			CatalogueEditorLayoutController controller = loader.getController();
+			CatalogueEditorLayoutController controller = loader.getController(); //On instancie le controlleur
 			controller.setMainApp(this);
 			controller.setEditeur(editeur);
 			controller.setCanvas();
@@ -266,17 +308,10 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 			return false;
 		}
 	}
-	public ArrayList<Type> getTypesList(){ return this.typesListe;}
 	
-	
-	public ArrayList<Projet> getProjetsList() {
-		return this.projetsList;
-	}
-	
-	public Projet getProjetIndex(int index) {
-		return this.projetsList.get(index);
-	}
-	
+	/*
+	 * Fonction vérifiant qu'un projet avec un certain nom existe déjà
+	 * */
 	public boolean projetExists(String name) {
 		for (int i = 0; i  < this.projetsList.size(); i++) {
 			if  (this.projetsList.get(i).getName().equals(name)) {
@@ -286,10 +321,9 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 		return false;
 	}
 	
-	public void setCurrentProjet (int index) {
-		this.currentProjetIndex = index;
-	}
-	
+	/*
+	 * Affichage d'une fenêtre d'alerte prévenant l'utilisateur de la création d'un nouveau projet
+	 * */
 	public void alertProjetCreation() {
 		Alert alert = new Alert(AlertType.ERROR);
         alert.initOwner(primaryStage);
@@ -302,7 +336,10 @@ public ObservableList<Type> getLumiereEtDecorationData() {
 
         alert.showAndWait();
 	}
-
+	
+	/*
+	 * Fonction main du projet entier
+	 * */
 	public static void main(String[] args) {
 		launch(args);
 	}

@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 
 public class ProjetsLayoutController {
 	
+	//ATTRIBUTS FXML
 	@FXML
 	private TextField projet_nameField;
 	@FXML
@@ -36,21 +37,17 @@ public class ProjetsLayoutController {
 	@FXML
 	private ImageView projet_PreviewImage;
 	
+	//ATTRIBUTS
 	private MainApp mainApp;
 	private Stage stage;
 	private int currentProjetsIndex;
 	
+	//CONTROLLEURS
 	public ProjetsLayoutController() {
 	}
 	
-	@FXML
-	private void initialize() throws MalformedURLException {
-		File file = new File("src/address/Images/Default/Cuisine_Accueil.png");
-		String localURL = file.toURI().toURL().toString();
-		Image useImage = new Image(localURL);
-		this.projet_PreviewImage.setImage(useImage);
-	}
-	
+	//METHODES
+	//Setters
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -67,6 +64,15 @@ public class ProjetsLayoutController {
 		this.projet_nameLabel.setText(projet.getName());
 		this.projet_dimensionLabel.setText(projet.getWidth() + "x" + projet.getHeight());
 		this.currentProjetsIndex = index;
+	}
+	
+	//METHODES FXML
+	@FXML
+	private void initialize() throws MalformedURLException {
+		File file = new File("src/address/Images/Default/Cuisine_Accueil.png");
+		String localURL = file.toURI().toURL().toString();
+		Image useImage = new Image(localURL);
+		this.projet_PreviewImage.setImage(useImage);
 	}
 	
 	@FXML
@@ -119,8 +125,11 @@ public class ProjetsLayoutController {
 		
 	}
 	
+	/*
+	 * Vérifie la validité des champ de saisie lors de la création d'un projet
+	 * */
 	private boolean isInputValid() {
-		String errorMessage = "";
+		String errorMessage = "";//portera le message d'erreur à afficher dans la fenêtre d'erreur
 		
 		if (this.projet_nameField.getText() == null || this.projet_nameField.getText().length() == 0) {
 			errorMessage += "Le nom n'est pas valide!\n";
@@ -156,7 +165,7 @@ public class ProjetsLayoutController {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
+			Alert alert = new Alert(AlertType.ERROR);//On affiche une alerte prévenant l'utilisateur des erreurss
             alert.initOwner(stage);
             alert.setTitle("Champs invalides");
             alert.setHeaderText("Corrigez les champs invalides");
