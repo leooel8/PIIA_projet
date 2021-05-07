@@ -19,12 +19,15 @@ public class Item {
 	private boolean rotated = false;
 	
 	//CONSTRUCTEUR
-	public Item (String name, double pos_x, double pos_y, double height, double width, String url) throws MalformedURLException {
+	public Item (String name, double pos_x, double pos_y, double height, double width, String url, double rotation) throws MalformedURLException {
 		this.name = name;
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
 		this.pos_x = pos_x;
-		
+		this.rotation = rotation;
+		if (rotation != 0.0) {
+			this.rotated = true;
+		}
 		this.url = url;
 		
 		File file = new File(url);
@@ -56,6 +59,12 @@ public class Item {
 	public void setY(double y) { this.pos_y = y; }
 	public void setWidth(double width) { this.width = width; }
 	public void setHeight(double height) { this.height = height; }
+	public void setRotation(double rotation) { 
+		this.rotation = rotation;
+		if (rotation != 0.0) {
+			this.rotated = true;
+		}
+	}
 	public void setUrl(String url) throws Exception {
 		this.url = url;
 		File file = new File(url);
@@ -70,6 +79,7 @@ public class Item {
 		res.setWidth(this.getWidth());
 		res.setHeight(this.getHeight());
 		res.setUrl(this.getUrl());
+		res.setRotation(this.getRotation());
 		
 		return res;
 	}

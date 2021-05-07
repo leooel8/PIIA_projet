@@ -85,7 +85,7 @@ public class MainApp extends Application {
 				for (String item : images) {
 					String nomImage = item.substring(0, item.length()-4); // on enleve le ".png" du nom
 					String url = "images/"+categorie+"/"+type+"/"+item;
-					lesItems.add(new Item(nomImage, 200, 200, 0, 0, url));//on rajoute l'image de l'item dans l'arrayList items	
+					lesItems.add(new Item(nomImage, 200, 200, 0, 0, url, 0.0));//on rajoute l'image de l'item dans l'arrayList items	
 				}					
 				typesListe.add(new Type(type,lesItems));
 				if(categorie.length()==14) 

@@ -54,7 +54,7 @@ public class CatalogueEditorLayoutController {
 	
 	@FXML
 	private void handleAddButton() throws Exception {
-		Item res = new Item(currentItem.getName(), currentItem.getX(), currentItem.getY(), currentItem.getWidth(), currentItem.getHeight(), currentItem.getUrl());
+		Item res = new Item(currentItem.getName(), currentItem.getX(), currentItem.getY(), currentItem.getWidth(), currentItem.getHeight(), currentItem.getUrl(), 0.0);
 		this.editeur.getCurrentProjet().addItem(res);
 		this.editeur.drawCanvas();
 	}

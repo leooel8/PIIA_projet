@@ -2,7 +2,6 @@ package address.view;
 
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import address.MainApp;
@@ -45,7 +44,7 @@ public class EditeurLayoutController {
 	private MainApp mainApp;
 	private Stage stage;
 	
-	private int currentItemIndex; //Index du projet en édition
+	private int currentItemIndex; //Index de l'item sélectionné
 	private Projet currentProjet; //Etat actuel du projet en édition
 	private boolean enDeplacement;
 	private double x_souris; //Anciennes positions de la souris
@@ -244,9 +243,7 @@ public class EditeurLayoutController {
 	
 	@FXML
 	private void handlRotateButton() throws Exception {
-		System.out.println("Before" + historic.size());
 		this.addStateToHistoric(true);
-		System.out.println("After" + historic.size());
 		currentProjet.getItemList().get(currentItemIndex).rotateRight(this.canvas);
 		drawCanvas();
 	}
@@ -303,7 +300,7 @@ public class EditeurLayoutController {
 	public Canvas drawCanvas() {
 		//Affichage des informations à gauche du canvas
 		//Permet l'affichage notamment de l'item sélectionné
-		if (currentProjet.getItemList().size() != 0) {
+		if (currentItemIndex > 0) {
 			this.item_NameLabel.setText(currentProjet.getItemList().get(currentItemIndex).getName());
 			this.item_XLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getWidth()));
 			this.item_YLabel.setText(Double.toString(currentProjet.getItemList().get(currentItemIndex).getHeight()));

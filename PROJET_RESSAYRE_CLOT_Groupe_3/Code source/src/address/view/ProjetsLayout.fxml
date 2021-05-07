@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.SepiaTone?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="address.view.ProjetsLayoutController">
+   <children>
+      <BorderPane prefHeight="650.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ImageView fx:id="projet_PreviewImage" fitHeight="650.0" fitWidth="1100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="-514.0" layoutY="-225.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="650.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="34.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="315.0" prefWidth="233.0" style="-fx-background-color: white; -fx-border-color: brown; -fx-border-width: 3; -fx-background-radius: 12; -fx-border-radius: 10;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="35.0">
+                     <children>
+                        <BorderPane prefHeight="315.0" prefWidth="233.33333333333334" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <Label fx:id="projet_nameLabel" alignment="CENTER" contentDisplay="CENTER" text="Titre du projet" BorderPane.alignment="TOP_CENTER">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <top>
+                              <AnchorPane prefHeight="19.0" prefWidth="227.0" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                        <Label fx:id="projet_dimensionLabel" layoutX="101.0" layoutY="203.0" text="Label" AnchorPane.leftAnchor="101.0" AnchorPane.topAnchor="210.0">
+                           <font>
+                              <Font name="Copperplate Gothic Light" size="12.0" />
+                           </font></Label>
+                        <Button layoutX="85.0" layoutY="248.0" mnemonicParsing="false" onAction="#handleEditProjet" text="Editer" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="258.0">
+                           <font>
+                              <Font name="Copperplate Gothic Bold" size="12.0" />
+                           </font></Button>
+                        <Button layoutX="194.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleRightButton" text="&gt;" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="117.0" />
+                        <Button layoutX="11.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleLeftButton" text="&lt;" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="117.0" />
+                        <Canvas fx:id="canvas" height="139.0" layoutX="44.0" layoutY="60.0" width="143.0" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="60.0" />
+                     </children>
+                     <effect>
+                        <SepiaTone />
+                     </effect>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="269.0" prefWidth="235.0" style="-fx-background-color: white; -fx-border-color: brown; -fx-border-width: 3; -fx-background-radius: 12; -fx-border-radius: 10;" AnchorPane.bottomAnchor="49.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="35.0">
+                     <children>
+                        <Label contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" style="-fx-underline: true;" text="Nouveau projet :" AnchorPane.leftAnchor="55.0" AnchorPane.topAnchor="14.0">
+                           <font>
+                              <Font name="Century Gothic" size="16.0" />
+                           </font></Label>
+                        <Label layoutX="14.0" layoutY="76.0" text="Nom  : " AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="76.0">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="12.0" layoutY="118.0" text="Dimensions :" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="118.0">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="73.0" layoutY="156.0" text="X = " AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="156.0">
+                           <font>
+                              <Font name="Copperplate Gothic Light" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="73.0" layoutY="191.0" text="Y = " AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="191.0">
+                           <font>
+                              <Font name="Copperplate Gothic Light" size="12.0" />
+                           </font></Label>
+                        <Label layoutX="142.0" layoutY="156.0" text="m" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="154.0">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font></Label>
+                        <Label layoutX="142.0" layoutY="191.0" text="m" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="189.0">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font></Label>
+                        <Button layoutX="89.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleCreateProjet" text="Créer" AnchorPane.leftAnchor="89.0" AnchorPane.topAnchor="250.0">
+                           <font>
+                              <Font name="Copperplate Gothic Bold" size="12.0" />
+                           </font></Button>
+                        <TextField fx:id="projet_nameField" layoutX="59.0" layoutY="72.0" AnchorPane.leftAnchor="59.0" AnchorPane.topAnchor="72.0" />
+                        <TextField fx:id="projet_XField" layoutX="100.0" layoutY="152.0" prefHeight="22.0" prefWidth="29.0" />
+                        <TextField fx:id="projet_YField" layoutX="100.0" layoutY="187.0" prefHeight="22.0" prefWidth="29.0" />
+                     </children>
+                     <effect>
+                        <SepiaTone />
+                     </effect>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
